@@ -25,7 +25,7 @@ public class TestSetup {
         Configuration.headless = false;
         Configuration.timeout = 15000;
         System.setProperty("selenide.timeout", "15000");
-        Configuration.holdBrowserOpen=true;
+        //Configuration.holdBrowserOpen=true;
     }
 
     @After
