@@ -42,3 +42,38 @@
 2023-04-12 23:34:16 INFO  Log4j:30 - Click on login button
 2023-04-12 23:34:16 INFO  Log4j:30 - Click on Login button
 2023-04-12 23:34:18 INFO  Log4j:25 - Test is Ending...
+2023-04-12 23:54:24 INFO  Log4j:20 - Test is Starting...
+2023-04-12 23:54:24 INFO  Log4j:30 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-12 23:54:25 INFO  Log4j:30 - Enter email
+2023-04-12 23:54:26 INFO  Log4j:30 - Enter password
+2023-04-12 23:54:26 INFO  Log4j:30 - Click on login button
+2023-04-12 23:54:26 INFO  Log4j:30 - Click on Login button
+2023-04-12 23:54:27 INFO  Log4j:25 - Test is Ending...
+2023-04-13 00:02:42 INFO  Log4j:20 - Test is Starting...
+2023-04-13 00:02:42 INFO  Log4j:30 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-13 00:02:44 INFO  Log4j:30 - Enter email
+2023-04-13 00:02:44 INFO  Log4j:30 - Enter password
+2023-04-13 00:02:45 INFO  Log4j:30 - Click on login button
+2023-04-13 00:02:45 INFO  Log4j:30 - Click on Login button
+2023-04-13 00:02:46 INFO  Log4j:25 - Test is Ending...
+2023-04-13 00:14:50 INFO  Log4j:20 - Test is Starting...
+2023-04-13 00:14:50 INFO  Log4j:30 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-13 00:14:52 INFO  Log4j:30 - Enter email
+2023-04-13 00:14:53 INFO  Log4j:30 - Enter password
+2023-04-13 00:14:53 INFO  Log4j:30 - Click on login button
+2023-04-13 00:14:53 INFO  Log4j:30 - Click on Login button
+2023-04-13 00:14:54 INFO  Log4j:25 - Test is Ending...
+2023-04-13 00:17:42 INFO  Log4j:20 - Test is Starting...
+2023-04-13 00:17:42 INFO  Log4j:30 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-13 00:17:44 INFO  Log4j:30 - Enter email
+2023-04-13 00:17:44 INFO  Log4j:30 - Enter password
+2023-04-13 00:17:45 INFO  Log4j:30 - Click on login button
+2023-04-13 00:17:45 INFO  Log4j:30 - Click on Login button
+2023-04-13 00:17:46 INFO  Log4j:25 - Test is Ending...
+2023-04-13 00:23:07 INFO  Log4j:20 - Test is Starting...
+2023-04-13 00:23:07 INFO  Log4j:30 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-13 00:23:08 INFO  Log4j:30 - Enter email
+2023-04-13 00:23:09 INFO  Log4j:30 - Enter password
+2023-04-13 00:23:09 INFO  Log4j:30 - Click on login button
+2023-04-13 00:23:09 INFO  Log4j:30 - Click on Login button
+2023-04-13 00:23:10 INFO  Log4j:25 - Test is Ending...

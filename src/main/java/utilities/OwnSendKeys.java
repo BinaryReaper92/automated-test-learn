@@ -105,8 +105,9 @@ public class OwnSendKeys {
 
     public static void mySendKeys( SelenideElement element, String text) throws Exception {
        if( !standardSendKeys( element, text ) )
-           javaScriptSendKeys( element, text);
-            jquerySendKeys(element, text);
+           if (!javaScriptSendKeys( element, text)) {
+               jquerySendKeys(element, text);
+           }
 
     }
 
