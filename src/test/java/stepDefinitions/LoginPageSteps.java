@@ -3,16 +3,13 @@ package stepDefinitions;
 import com.codeborne.selenide.Selenide;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import lombok.extern.slf4j.Slf4j;
 import testObjects.LoginPageTest;
-import utilities.Config;
 import utilities.ConfigLoader;
 import utilities.Log4j;
 
 
 public class LoginPageSteps {
 
-    private static Config config;
 
     @Given("Admin opens URL {string}")
     public void admin_opens_url(String url) {
@@ -23,6 +20,7 @@ public class LoginPageSteps {
 
 
     @And("Admin enters Email as {string}")
+
     public void admin_enters_email_as(String admin) throws Exception {
         Log4j.info("Enter email");
         LoginPageTest.setUserName(ConfigLoader.getUsername());
@@ -36,6 +34,7 @@ public class LoginPageSteps {
         LoginPageTest.setPassword(ConfigLoader.getPassword());
 
     }
+
 
     @And("Admin click on Login")
     public void admin_click_on_login() throws Exception {

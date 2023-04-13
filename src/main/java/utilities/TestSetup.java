@@ -17,6 +17,8 @@ public class TestSetup {
         Log4j.log4jSetup();
         Log4j.startLog("Test is starting");
 
+        Configuration.screenshots = true;
+        System.setProperty("selenide.reportsFolder", "D:/Learn/automated-test-skeleton/Selenide/Screenshots");
         System.setProperty("selenide.browser", "chrome");
         Configuration.browser = "chrome";
         //      System.setProperty("selenide.browser", "firefox");

@@ -6,6 +6,6 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class DashboardPage {
     public SelenideElement getPageTitle(){
-        return $x("//h1[contains(@class,'page-header__title')]");
+        return $x("//h1[contains(@class,'page-header__titlea')]");
     }
 }
