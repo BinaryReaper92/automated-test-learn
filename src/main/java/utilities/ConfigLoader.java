@@ -31,6 +31,9 @@ public class ConfigLoader {
     public static String getPassword() {
         return props.getProperty("password");
     }
+    public static String getAppURI() {
+        return props.getProperty("appURI");
+    }
 
 }
 
