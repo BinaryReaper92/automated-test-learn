@@ -4,6 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 import java.io.*;
 import java.util.HashMap;
@@ -67,6 +72,29 @@ public class JSONReader {
         }
 
     }
+
+    public static void getAPIWriter(String input){
+        BufferedWriter writer = null;
+        try {
+
+            writer = new BufferedWriter(new FileWriter("src/main/resources/requestsBodyJsons/getCompanies.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.write(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     /*
     public UserModel getUser(String role) {
         String path = "//Properties//users.json";
