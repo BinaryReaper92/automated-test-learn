@@ -38,7 +38,7 @@ public class HttpRequests {
         return currentResponse;
     }
 
-    public static Response GetAPI(String url, String isLogin, String requestUrl) {
+    public static Response GetAPI(String url, String requestUrl) {
         Header header1 = new Header("Content-type", "application/json");
         Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
         Headers headers = new Headers(header1,header2);
@@ -55,7 +55,7 @@ public class HttpRequests {
         return currentResponse;
     }
 
-    public static Response PutAPI(String url, String isLogin, String requestBody, String requestUrl) {
+    public static Response PutAPI(String url, String requestBody, String requestUrl) {
         Header header1 = new Header("Content-type", "application/json");
         Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
         Headers headers = new Headers(header1,header2);
@@ -74,7 +74,7 @@ public class HttpRequests {
         return currentResponse;
     }
 
-    public static Response DeleteAPI(String url, String isLogin, String requestBody, String requestUrl) {
+    public static Response DeleteAPI(String url, String requestBody, String requestUrl) {
         Header header1 = new Header("Content-type", "application/json");
         Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
         Headers headers = new Headers(header1,header2);

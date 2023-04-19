@@ -6,9 +6,12 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
 
 import java.time.Duration;
 
@@ -58,4 +61,25 @@ public class Helper {
         Selenide.executeJavaScript("window.scrollTo(0, 0);");
     }
 
+    public static void doubleClick(SelenideElement element) {
+        Actions actions = new Actions(getWebDriver());
+        actions.doubleClick(element).perform();
+    }
+
+    public static void rightClick(SelenideElement element) {
+        Actions actions = new Actions(getWebDriver());
+        actions.contextClick(element).perform();
+    }
+    public static void hover(SelenideElement element) {
+        element.hover();
+    }
+
+    public static void dragAndDrop(SelenideElement source, SelenideElement target) {
+        Actions actions = new Actions(getWebDriver());
+        actions.dragAndDrop(source, target).perform();
+    }
+
+    public static void selectOption(SelenideElement element, String option) {
+        element.selectOption(option);
+    }
 }

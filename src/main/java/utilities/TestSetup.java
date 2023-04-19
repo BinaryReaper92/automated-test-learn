@@ -4,12 +4,9 @@ import com.codeborne.selenide.Configuration;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
-
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
-
 public class TestSetup {
-
 
     @Before
     public void setup() {
@@ -31,10 +28,17 @@ public class TestSetup {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown(io.cucumber.java.Scenario scenario) {
+
+        if (scenario.isFailed()) {
+            String testName = scenario.getName();
+            String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
+            String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
+            TakeScreenshot.takeScreenshot(screenshotName);
+            Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
+        }
 
         Log4j.endLog("Test is ending.");
-
         closeWebDriver();
     }
 }
