@@ -4,23 +4,28 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 
 public class JiraUtils {
 
+    String jiraURL = ConfigLoader.getJiraURL();
+    String jiraUserName = ConfigLoader.getJiraUser();
+    String jiraAccessKey = ConfigLoader.getJiraKey();
 
-    public static String createJiraIssue(String issueSummary, String issueDescription) throws ClientProtocolException, IOException, ParseException {
 
-        String jiraURL = ConfigLoader.getJiraURL();
-        String jiraUserName = ConfigLoader.getJiraUser();
-        String jiraAccessKey = ConfigLoader.getJiraKey();
+    public String createJiraIssue(String issueSummary, String issueDescription) throws ClientProtocolException, IOException, ParseException {
+
+
         String issueId = null; //to store issue / bug id.
 
         HttpClient httpClient = HttpClientBuilder.create().build();
@@ -28,10 +33,8 @@ public class JiraUtils {
         HttpPost postRequest = new HttpPost(url);
         postRequest.addHeader("content-type", "application/json");
 
-        //	BASE64Encoder base=new BASE64Encoder();
         String encoding = Base64.getEncoder().encodeToString((jiraUserName+":"+jiraAccessKey).getBytes());
-        //String encoding = base.encode((jiraUserName+":"+jiraAccessKey).getBytes());
-        postRequest.setHeader("Authorization", "Basic " + encoding);
+        postRequest.setHeader("Authorization", "Basic " +  encoding);
 
         StringEntity params = new StringEntity(createPayloadForCreateJiraIssue(issueSummary, issueDescription));
         postRequest.setEntity(params);
@@ -74,6 +77,33 @@ public class JiraUtils {
                 "\t\t}\n" +
                 "\t}\n" +
                 "}";
+    }
+
+    public void addAttachmentToJiraIssue(String issueId, String filePath) throws ClientProtocolException, IOException
+    {
+        String pathname= filePath;
+        File fileUpload = new File(pathname);
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        String url = jiraURL+"/rest/api/3/issue/"+issueId+"/attachments";
+        HttpPost postRequest = new HttpPost(url);
+
+        String encoding = Base64.getEncoder().encodeToString((jiraUserName+":"+jiraAccessKey).getBytes());
+
+        postRequest.setHeader("Authorization", "Basic " + encoding);
+        postRequest.setHeader("X-Atlassian-Token","nocheck");
+
+        MultipartEntityBuilder entity=MultipartEntityBuilder.create();
+        entity.addPart("file", new FileBody(fileUpload));
+        postRequest.setEntity( entity.build());
+        HttpResponse response = httpClient.execute(postRequest);
+        System.out.println(response.getStatusLine());
+
+        if(response.getStatusLine().toString().contains("200 OK")){
+            System.out.println("Attachment uploaded");
+        } else{
+            System.out.println("Attachment not uploaded");
+        }
     }
 
 }
