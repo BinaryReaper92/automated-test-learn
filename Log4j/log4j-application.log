@@ -476,3 +476,13 @@
 2023-04-22 03:13:41 INFO  Log4j:26 - Test failed with the following test: Successful login with valid credentials 
  Screenshot taken to: ./Screenshots/screenshot_1682126021177.png
 2023-04-22 03:13:42 INFO  Log4j:21 - Test is Ending...
+2023-04-23 00:19:20 INFO  Log4j:16 - Test is Starting...
+2023-04-23 00:19:20 INFO  Log4j:26 - Opening the website:https://admin.slt-dev.attrecto-dev.com/login
+2023-04-23 00:19:23 INFO  Log4j:26 - Enter email
+2023-04-23 00:19:23 INFO  Log4j:26 - Enter password
+2023-04-23 00:19:24 INFO  Log4j:26 - Click on login button
+2023-04-23 00:19:24 INFO  Log4j:26 - Click on Login button
+2023-04-23 00:19:24 INFO  Log4j:26 - Checking page title
+2023-04-23 00:19:34 INFO  Log4j:26 - Test failed with the following test: Successful login with valid credentials 
+ Screenshot taken to: ./Screenshots/screenshot_1682201974374.png
+2023-04-23 00:19:37 INFO  Log4j:21 - Test is Ending...

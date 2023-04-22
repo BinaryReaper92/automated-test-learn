@@ -12,6 +12,8 @@ import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
 public class TestSetup {
 
+    JiraUtils jiraU = new JiraUtils();
+
     @Before
     public void setup() {
 
@@ -44,11 +46,17 @@ public class TestSetup {
             if (bugCreation.equalsIgnoreCase("yes")){
                 String issueS = "Automation Test Failed - "+scenario.getName();
                 String issueD = "Test Data to be passed here.";
+                String issueId = null;
 
                 try {
-                    JiraUtils.createJiraIssue(issueD,issueS);
+                    issueId = jiraU.createJiraIssue(issueS, issueD);
                 } catch (Exception e1){
                     e1.printStackTrace();
+                }
+                try {
+                    jiraU.addAttachmentToJiraIssue(issueId, screenshotPath);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
 
             }
