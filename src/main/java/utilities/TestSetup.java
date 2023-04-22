@@ -3,6 +3,10 @@ package utilities;
 import com.codeborne.selenide.Configuration;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import org.json.simple.parser.ParseException;
+
+import java.io.File;
+import java.io.IOException;
 
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
@@ -28,7 +32,7 @@ public class TestSetup {
     }
 
     @After
-    public void tearDown(io.cucumber.java.Scenario scenario) {
+    public void tearDown(io.cucumber.java.Scenario scenario) throws IOException, ParseException {
 
         if (scenario.isFailed()) {
             String testName = scenario.getName();
@@ -36,9 +40,23 @@ public class TestSetup {
             String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
             TakeScreenshot.takeScreenshot(screenshotName);
             Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
+            String bugCreation = ConfigLoader.getJiraCreate();
+            if (bugCreation.equalsIgnoreCase("yes")){
+                String issueS = "Automation Test Failed - "+scenario.getName();
+                String issueD = "Test Data to be passed here.";
+
+                try {
+                    JiraUtils.createJiraIssue(issueD,issueS);
+                } catch (Exception e1){
+                    e1.printStackTrace();
+                }
+
+            }
         }
 
         Log4j.endLog("Test is ending.");
         closeWebDriver();
+        File reportFile = new File("D:/Learn/automated-test-skeleton/Reports/emailable-report.html");
+        EmailUtil.sendReportEmail(scenario, reportFile);
     }
 }
