@@ -29,10 +29,23 @@ public class ConfigLoader {
     }
 
     public static String getPassword() {
-        return props.getProperty("password");
+        return EncrypterDecrypter.decrypt(props.getProperty("password"));
     }
     public static String getAppURI() {
         return props.getProperty("appURI");
+    }
+
+    public static String getJiraURL(){
+        return props.getProperty("jiraURL");
+    }
+    public static String getJiraUser(){
+        return props.getProperty("jiraUserName");
+    }
+    public static String getJiraKey(){
+        return props.getProperty("jiraKey");
+    }
+    public static String getJiraCreate(){
+        return props.getProperty("createJiraTicket");
     }
 
 }

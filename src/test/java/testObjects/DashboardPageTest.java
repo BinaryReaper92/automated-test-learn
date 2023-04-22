@@ -3,7 +3,7 @@ package testObjects;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import pageObjects.DashboardPage;
-import utilities.Helper;
+import utilities.CustomFluentWait;
 import utilities.Log4j;
 import utilities.TakeScreenshot;
 
@@ -15,7 +15,7 @@ public class DashboardPageTest {
         Log4j.info("Checking page title");
         DashboardPage dashboardPage = page(DashboardPage.class);
         SelenideElement element = dashboardPage.getPageTitle();
-        Helper.waitForElementToAppear(element, 10000);
+        CustomFluentWait.fluentWait(element, Condition.visible, 10, 500);
         element.shouldHave(Condition.text(title));
         String screenshotName = "screenshotElement_" + System.currentTimeMillis() + ".png";
         TakeScreenshot.takeElementScreenshot(element, screenshotName);
