@@ -34,9 +34,10 @@ public class TestSetup {
     }
 
     @After
-    public void tearDown(io.cucumber.java.Scenario scenario) throws IOException, ParseException {
+    public void tearDown(io.cucumber.java.Scenario scenario) throws IOException, ParseException, InterruptedException {
 
         if (scenario.isFailed()) {
+
             String testName = scenario.getName();
             String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
             String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
@@ -44,8 +45,11 @@ public class TestSetup {
             Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
             String bugCreation = ConfigLoader.getJiraCreate();
             if (bugCreation.equalsIgnoreCase("yes")){
+                String logData = Log4j.readLogFile();
+                String formattedLogData = logData.replaceAll("\\r?\\n", " ");
                 String issueS = "Automation Test Failed - "+scenario.getName();
-                String issueD = "Test Data to be passed here.";
+                String issueD = formattedLogData;
+                System.out.println(issueD);
                 String issueId = null;
 
                 try {
@@ -58,13 +62,20 @@ public class TestSetup {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                String htmlReportPath = "D:/Learn/automated-test-skeleton/Reports/emailable-report.html";
+                try {
+                    jiraU.addAttachmentToJiraIssue(issueId, htmlReportPath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         }
 
-        Log4j.endLog("Test is ending.");
-        closeWebDriver();
         File reportFile = new File("D:/Learn/automated-test-skeleton/Reports/emailable-report.html");
         EmailUtil.sendReportEmail(scenario, reportFile);
+
+        Log4j.endLog("Test is ending.");
+        closeWebDriver();
     }
 }
