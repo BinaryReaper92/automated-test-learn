@@ -1,56 +1,67 @@
 package testObjects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.response.Response;
+import models.CustomResponse;
 import utilities.ConfigLoader;
 import utilities.HttpRequests;
-import utilities.JSONReader;
+import utilities.JSONUtils;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class HttpRequestTest {
 
     private String requestBaseURI;
-    private Response response;
+    private CustomResponse response;
 
     public void setRequestBaseURI() {
         requestBaseURI = ConfigLoader.getAppURI();
     }
 
-    public Response postRequest(String requestUrl, String bodyJson, String isLoggedIn) {
-        return HttpRequests.PostAPI(requestBaseURI, isLoggedIn, JSONReader.getRequestBody(bodyJson), requestUrl);
+    public CustomResponse postRequest(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {
+        response = HttpRequests.PostAPI(requestBaseURI, isLoggedIn, bodyJson, requestUrl);
+        System.out.println(response);
+        return response;
     }
 
-    public Response getRequest(String requestUrl, String isLoggedIn) {
-        return HttpRequests.GetAPI(requestBaseURI, requestUrl);
+    public CustomResponse getRequest(String requestUrl) {
+        response = HttpRequests.GetAPI(requestBaseURI, requestUrl);
+        return response;
     }
 
-    public Response putRequest(String requestUrl, String bodyJson) {
-        return HttpRequests.PutAPI(requestBaseURI, JSONReader.getRequestBody(bodyJson), requestUrl);
+    public CustomResponse putRequest(String requestUrl, String requestBody) {
+        response = HttpRequests.PutAPI(requestBaseURI, requestBody, requestUrl);
+        return response;
+    }
+
+    public CustomResponse deleteRequest(String requestUrl) {
+        response = HttpRequests.DeleteAPI(requestBaseURI, null, requestUrl);
+        return response;
     }
 
     public int getResponseStatusCode() {
         return response.getStatusCode();
     }
 
-    public void setResponse(Response response) {
+    public void setResponse(CustomResponse response) {
         this.response = response;
     }
 
-    public Response getResponse() {
+    public CustomResponse getResponse() {
         return response;
     }
+
     public String getResponseBody() {
-        return getResponse().getBody().asString();
+        return getResponse().getResponseString();
     }
 
     public void printResponseBodyIfStatusOk() {
-        if (getResponse().statusCode() == 200) {
+        if (getResponse().getStatusCode() == 200) {
             String responseBody = getResponseBody();
             System.out.println(responseBody);
-            JSONReader.getAPIWriter(responseBody);
+            JSONUtils.getAPIWriter(responseBody);
         } else {
-            System.out.println("Failed to get data, status code: " + getResponse().statusCode());
+            System.out.println("Failed to get data, status code: " + getResponse().getStatusCode());
         }
     }
 

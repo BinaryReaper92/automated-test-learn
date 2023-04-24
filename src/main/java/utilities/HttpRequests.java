@@ -1,96 +1,109 @@
 package utilities;
 
-import io.restassured.RestAssured;
-import io.restassured.http.Header;
-import io.restassured.http.Headers;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
+import models.CustomResponse;
 
-import static io.restassured.RestAssured.given;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+
 
 public class HttpRequests {
-    public static Response PostAPI(String url, String isLogin, String requestBody, String requestUrl) {
-        Header header1 = new Header("Content-type", "application/json");
-        Headers headers = null;
-        if (isLogin.equals("logged out")){
-            headers = new Headers(header1);
-        }
-        else {
-            Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
-            headers = new Headers(header1,header2);
-        }
-        RestAssured.baseURI = url;
-        Response currentResponse = (Response)
-                given ()
-                        .headers(headers)
-                        .and()
-                        .body(requestBody)
-                        .when()
-                        .post(requestUrl)
-                        .then()
-                        .extract().response();
 
-        if(isLogin.equals("logged out")){
-            JsonPath jp = currentResponse.jsonPath();
-            JSONReader.bearerTokenWriter((String) jp.get("access_token"));
-        }
+    public static CustomResponse PostAPI(String url, String isLogin, String requestBody, String requestUrl) {
+        try {
+            String bearerToken = isLogin.equals("logged out") ? null : JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+            CustomResponse response = sendRequest("POST", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
 
-        return currentResponse;
+            if (isLogin.equals("logged out")) {
+                HashMap<String, Object> responseMap = JSONUtils.parseJsonFromString(response.getResponseString());
+                String accessToken = (String) responseMap.get("access_token");
+                JSONUtils.bearerTokenWriter(accessToken);
+            }
+
+            response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static Response GetAPI(String url, String requestUrl) {
-        Header header1 = new Header("Content-type", "application/json");
-        Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
-        Headers headers = new Headers(header1,header2);
+    public static CustomResponse sendRequest(String method, String url, String requestBody, String bearerToken) throws IOException {
+        URL endpoint = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
 
-        RestAssured.baseURI = url;
-        Response currentResponse = given()
-                .headers(headers)
-                .when()
-                .get(requestUrl)
-                .then()
-                .extract()
-                .response();
+        connection.setRequestMethod(method);
+        connection.setRequestProperty("Content-Type", "application/json");
 
-        return currentResponse;
+        if (bearerToken != null) {
+            connection.setRequestProperty("Authorization", "Bearer " + bearerToken);
+        }
+
+        connection.setDoOutput(true);
+        if (requestBody != null) {
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(requestBody.getBytes(StandardCharsets.UTF_8));
+            }
+        }
+
+        int responseCode = connection.getResponseCode();
+        String responseString;
+
+        InputStream inputStream;
+        if (responseCode >= 200 && responseCode <= 299) {
+            inputStream = connection.getInputStream();
+        } else {
+            inputStream = connection.getErrorStream();
+        }
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            StringBuilder responseBuilder = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                responseBuilder.append(line);
+            }
+            responseString = responseBuilder.toString();
+        }
+
+        return new CustomResponse(responseCode, responseString);
     }
 
-    public static Response PutAPI(String url, String requestBody, String requestUrl) {
-        Header header1 = new Header("Content-type", "application/json");
-        Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
-        Headers headers = new Headers(header1,header2);
-
-        RestAssured.baseURI = url;
-        Response currentResponse = given()
-                .headers(headers)
-                .and()
-                .body(requestBody)
-                .when()
-                .put(requestUrl)
-                .then()
-                .extract()
-                .response();
-
-        return currentResponse;
+    public static CustomResponse GetAPI(String url, String requestUrl) {
+        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        try {
+            CustomResponse response = sendRequest("GET", url + requestUrl, null, bearerToken);
+            response.setResponseList(JSONUtils.parseJsonArrayFromString(response.getResponseString()));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static Response DeleteAPI(String url, String requestBody, String requestUrl) {
-        Header header1 = new Header("Content-type", "application/json");
-        Header header2 = new Header("Authorization","Bearer " + JSONReader.getRequestBody("src/main/resources/bearerToken.txt"));
-        Headers headers = new Headers(header1,header2);
+    public static CustomResponse PutAPI(String url, String requestBody, String requestUrl) {
+        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        try {
+            CustomResponse response = sendRequest("PUT", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
+            response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-        RestAssured.baseURI = url;
-        Response currentResponse = given()
-                .headers(headers)
-                .and()
-                .body(requestBody)
-                .when()
-                .delete(requestUrl)
-                .then()
-                .extract()
-                .response();
-
-        return currentResponse;
+    public static CustomResponse DeleteAPI(String url, String requestBody, String requestUrl) {
+        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        try {
+            CustomResponse response = sendRequest("DELETE", url + requestUrl, null, bearerToken);
+            response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

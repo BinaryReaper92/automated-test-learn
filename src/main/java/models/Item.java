@@ -11,8 +11,6 @@ public class Item {
         this.value = value;
     }
 
-    // Add getters and setters for each field here
-
     public int getId() {
         return id;
     }
@@ -36,8 +34,6 @@ public class Item {
     public void setValue(int value) {
         this.value = value;
     }
-
-    // Optionally, add a toString method for easier debugging
 
     @Override
     public String toString() {

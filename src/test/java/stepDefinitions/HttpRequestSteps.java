@@ -4,8 +4,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import models.CustomResponse;
 import org.testng.Assert;
 import testObjects.HttpRequestTest;
+
+import java.io.IOException;
 
 public class HttpRequestSteps {
 
@@ -16,28 +19,35 @@ public class HttpRequestSteps {
         httpRequestTest.setRequestBaseURI();
     }
 
-    @When("Calling the {string} endpoint with the given body: {string} while {string}")
-    public void calling_the_request(String requestUrl, String bodyJson, String isLoggedIn) {
-        Response response = httpRequestTest.postRequest(requestUrl, bodyJson, isLoggedIn);
+    @When("Calling the POST {string} endpoint with the given body: {string} while {string}")
+    public void calling_the_post_request(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {
+        CustomResponse response = httpRequestTest.postRequest(requestUrl, bodyJson, isLoggedIn);
         httpRequestTest.setResponse(response);
     }
 
     @Then("Receiving {int}")
-    public void receiving(int statusCode) {
-        Assert.assertEquals(statusCode, httpRequestTest.getResponseStatusCode());
+    public void receiving(int expectedStatusCode) {
+        Assert.assertEquals(httpRequestTest.getResponseStatusCode(), expectedStatusCode);
+        System.out.println(expectedStatusCode);
         System.out.println(httpRequestTest.getResponseStatusCode());
     }
 
-    @When("Calling the {string} endpoint while {string}")
-    public void calling_the_endpoint_while(String requestUrl, String isLoggedIn) {
-        Response response = httpRequestTest.getRequest(requestUrl, isLoggedIn);
+    @When("Calling the GET {string} endpoint")
+    public void calling_the_get_endpoint(String requestUrl) {
+        CustomResponse response = httpRequestTest.getRequest(requestUrl);
         httpRequestTest.setResponse(response);
         httpRequestTest.printResponseBodyIfStatusOk();
     }
 
-    @When("Calling the {string} endpoint with the given body: {string}")
-    public void callingTheEndpoint(String requestUrl, String bodyJson) {
-        Response response = httpRequestTest.putRequest(requestUrl, bodyJson);
+    @When("Calling the PUT {string} endpoint with the given body: {string}")
+    public void calling_the_put_endpoint(String requestUrl, String bodyJson) {
+        CustomResponse response = httpRequestTest.putRequest(requestUrl, bodyJson);
+        httpRequestTest.setResponse(response);
+    }
+
+    @When("Calling the DELETE {string} endpoint")
+    public void calling_the_delete_endpoint(String requestUrl) {
+        CustomResponse response = httpRequestTest.deleteRequest(requestUrl);
         httpRequestTest.setResponse(response);
     }
 
