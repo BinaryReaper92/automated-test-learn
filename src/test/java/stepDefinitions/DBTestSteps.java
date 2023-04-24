@@ -32,7 +32,6 @@ public class DBTestSteps {
 
     @Then("the new item should be added to the table")
     public void theNewItemShouldBeAddedToTheTable() {
-        System.out.println(dbTestTest.getLatestItemId());
         dbTestTest.isItemInserted();
     }
 
@@ -41,9 +40,9 @@ public class DBTestSteps {
         dbTestTest.updateItem(itemId, newName, newValue);
     }
 
-    @Then("the item in the table should have the new values")
-    public void theItemInTheTableShouldHaveTheNewValues() {
-        System.out.println(dbTestTest.getLatestItemId());
+    @Then("the item in the table should have the new values {string} and {int}")
+    public void theItemInTheTableShouldHaveTheNewValues(String expectedName, int expectedValue) {
+        dbTestTest.isItemUpdated(expectedName, expectedValue);
     }
 
     @When("delete item with ID {int}")

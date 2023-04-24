@@ -9,15 +9,14 @@ import java.sql.Statement;
 
 
 public class DatabaseUtils {
-    private static DatabaseConnection dbConnection;
 
     public DatabaseUtils() {
-        dbConnection = new DatabaseConnection();
     }
 
     public void readItems() {
         String query = "SELECT * FROM test_schema.new_table";
-        try (Connection connection = dbConnection.getConnection();
+        try (DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -35,7 +34,8 @@ public class DatabaseUtils {
 
     public int insertItem(String name, int value) {
         String query = "INSERT INTO `test_schema`.`new_table` (`name`, `value`) VALUES (?, ?)";
-        try (Connection connection = dbConnection.getConnection();
+        try (DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, name);
@@ -57,7 +57,8 @@ public class DatabaseUtils {
 
     public void updateItem(int id, String newName, int newValue) {
         String query = "UPDATE `test_schema`.`new_table` SET name = ?, value = ? WHERE id = ?";
-        try (Connection connection = dbConnection.getConnection();
+        try (DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, newName);
@@ -77,7 +78,8 @@ public class DatabaseUtils {
 
     public void deleteItem(int id) {
         String query = "DELETE FROM `test_schema`.`new_table` WHERE id = ?";
-        try (Connection connection = dbConnection.getConnection();
+        try (DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
@@ -97,7 +99,8 @@ public class DatabaseUtils {
         Item item = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dbConnection.getConnection();
+        try (DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
