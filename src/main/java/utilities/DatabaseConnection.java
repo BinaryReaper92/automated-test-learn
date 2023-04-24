@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DatabaseConnection implements AutoCloseable {
     private Connection connection;
 
     public DatabaseConnection() {
@@ -26,7 +26,8 @@ public class DatabaseConnection {
         return connection;
     }
 
-    public void closeConnection() {
+    @Override
+    public void close() {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();

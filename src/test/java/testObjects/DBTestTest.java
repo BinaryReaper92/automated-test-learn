@@ -3,51 +3,56 @@ package testObjects;
 import models.Item;
 import utilities.DatabaseUtils;
 
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.*;
 
 public class DBTestTest {
-    private DatabaseUtils DatabaseUtils;
+    private DatabaseUtils databaseUtils;
     private int latestItemId;
+    private int updatedItemId;
     private int deletedItemId;
-    private int insertedItemId;
 
     public DBTestTest() {
-        DatabaseUtils = new DatabaseUtils();
+        databaseUtils = new DatabaseUtils();
     }
 
     public void readItems() {
-        DatabaseUtils.readItems();
+        databaseUtils.readItems();
     }
 
     public void insertItem(String name, int value) {
-        latestItemId = DatabaseUtils.insertItem(name, value);
+        latestItemId = databaseUtils.insertItem(name, value);
     }
 
     public void updateItem(int id, String newName, int newValue) {
-        DatabaseUtils.updateItem(id, newName, newValue);
+        databaseUtils.updateItem(id, newName, newValue);
+        updatedItemId = id;
     }
 
     public void deleteItem(int id) {
-        DatabaseUtils.deleteItem(id);
+        databaseUtils.deleteItem(id);
         deletedItemId = id;
     }
 
     public int getLatestItemId() {
         return latestItemId;
     }
-    public void isItemInserted(){
-        System.out.println(insertedItemId);
-        Item item = DatabaseUtils.getItemById(insertedItemId);
+
+    public void isItemInserted() {
+        Item item = DatabaseUtils.getItemById(latestItemId);
+        assertNotNull("Item with ID " + latestItemId + " should be in the table", item);
     }
 
-    public void isItemDeleted(){
-        System.out.println(deletedItemId);
+    public void isItemUpdated(String expectedName, int expectedValue) {
+        Item item = DatabaseUtils.getItemById(updatedItemId);
+        assertNotNull("Item with ID " + updatedItemId + " should be in the table", item);
+        assertEquals("Item name should be updated", expectedName, item.getName());
+        assertEquals("Item value should be updated", expectedValue, item.getValue());
+    }
+
+    public void isItemDeleted() {
         Item item = DatabaseUtils.getItemById(deletedItemId);
-        assertTrue("Item with ID " + deletedItemId + " should be removed from the table", item == null);
-
-
-
-
+        assertNull("Item with ID " + deletedItemId + " should be removed from the table", item);
     }
-
 }
+
+
