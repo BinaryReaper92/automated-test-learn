@@ -20,7 +20,6 @@ public class LoginPageSteps {
 
 
     @And("Admin enters Email as {string}")
-
     public void admin_enters_email_as(String admin) throws Exception {
         Log4j.info("Enter email");
         LoginPageTest.setUserName(ConfigLoader.getUsername());

@@ -30,7 +30,6 @@ public class LoginPageTest{
 
     public static void clickLogin() throws Exception {
 
-        Log4j.info("Click on Login button");
         LoginPage loginPage = page(LoginPage.class);
         loginPage.getLoginButton().shouldBe(visible);
         OwnClick.baseClick(loginPage.getLoginButton());

@@ -1,6 +1,5 @@
 package utilities;
 import io.cucumber.java.Scenario;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.*;

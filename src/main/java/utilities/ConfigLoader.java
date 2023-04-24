@@ -1,12 +1,8 @@
 package utilities;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import com.google.gson.Gson;
-import lombok.extern.slf4j.Slf4j;
-
 
 public class ConfigLoader {
     private static final Properties props = new Properties();
@@ -46,6 +42,16 @@ public class ConfigLoader {
     }
     public static String getJiraCreate(){
         return props.getProperty("createJiraTicket");
+    }
+
+    public static String getDBUrl(){
+        return props.getProperty("db.url");
+    }
+    public static String getDBUser(){
+        return props.getProperty("db.username");
+    }
+    public static String getDBPassword(){
+        return props.getProperty("db.password");
     }
 
 }

@@ -60,7 +60,7 @@ public class ElementFinder {
 
     public static SelenideElement myFindElement(String locator){
         SelenideElement element = null;
-        element = element = myFindElementByXpath(locator);
+        element = myFindElementByXpath(locator);
 
         if (element == null) {
             element = myFindElementById(locator);
