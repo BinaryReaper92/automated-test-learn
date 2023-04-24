@@ -1,11 +1,9 @@
 package stepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import testObjects.DBTestTest;
-import utilities.DatabaseConnection;
 
 public class DBTestSteps {
     private DBTestTest dbTestTest;
