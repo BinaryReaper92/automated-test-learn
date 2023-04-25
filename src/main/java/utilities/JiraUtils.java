@@ -1,20 +1,20 @@
 package utilities;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class JiraUtils {
@@ -23,88 +23,112 @@ public class JiraUtils {
     String jiraUserName = ConfigLoader.getJiraUser();
     String jiraAccessKey = ConfigLoader.getJiraKey();
 
+    public String createJiraIssue(String issueSummary, String issueDescription) throws IOException {
+        String issueId = null;
 
-    public String createJiraIssue(String issueSummary, String issueDescription) throws ClientProtocolException, IOException, ParseException {
+        String urlString = jiraURL + "/rest/api/3/issue";
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
 
-        String issueId = null; //to store issue / bug id.
+        String encoding = Base64.getEncoder().encodeToString((jiraUserName + ":" + jiraAccessKey).getBytes());
+        connection.setRequestProperty("Authorization", "Basic " + encoding);
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        String url = jiraURL+"/rest/api/3/issue";
-        HttpPost postRequest = new HttpPost(url);
-        postRequest.addHeader("content-type", "application/json");
+        connection.setDoOutput(true);
+        try (OutputStream os = connection.getOutputStream()) {
+            byte[] input = createPayloadForCreateJiraIssue(issueSummary, issueDescription).getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
 
-        String encoding = Base64.getEncoder().encodeToString((jiraUserName+":"+jiraAccessKey).getBytes());
-        postRequest.setHeader("Authorization", "Basic " +  encoding);
+        StringBuilder response;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+            response = new StringBuilder();
+            String responseLine;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+        }
 
-        StringEntity params = new StringEntity(createPayloadForCreateJiraIssue(issueSummary, issueDescription));
-        postRequest.setEntity(params);
-        HttpResponse response = httpClient.execute(postRequest);
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.toString(), JsonObject.class);
 
-        //convert httpresponse to string
-        String jsonString = EntityUtils.toString(response.getEntity());
-
-        //convert sring to Json
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(jsonString);
-
-        //extract issuekey from Json
-        issueId = (String) json.get("key");
+        issueId = jsonResponse.get("key").getAsString();
 
         return issueId;
-
     }
+
     private static String createPayloadForCreateJiraIssue(String issueSummary, String issueDescription) {
-        return "{\n" +
-                "\t\"fields\": {\n" +
-                "\t\t\"project\": {\n" +
-                "\t\t\t\"key\": \"AT\",\n" +
-                "\t\t\t\"name\": \"automated-test\"\n" +
-                "\t\t},\n" +
-                "\t\t\"summary\": \""+issueSummary+"\",\n" +
-                "\t\t\"description\": {\n" +
-                "\t\t\t\"type\": \"doc\",\n" +
-                "\t\t\t\"version\": 1,\n" +
-                "\t\t\t\"content\": [{\n" +
-                "\t\t\t\t\"type\": \"paragraph\",\n" +
-                "\t\t\t\t\"content\": [{\n" +
-                "\t\t\t\t\t\"text\": \""+issueDescription+"\",\n" +
-                "\t\t\t\t\t\"type\": \"text\"\n" +
-                "\t\t\t\t}]\n" +
-                "\t\t\t}]\n" +
-                "\t\t},\n" +
-                "\t\t\"issuetype\": {\n" +
-                "\t\t\t\"name\": \"Bug\"\n" +
-                "\t\t}\n" +
-                "\t}\n" +
-                "}";
+        JsonObject payload = new JsonObject();
+        JsonObject fields = new JsonObject();
+        JsonObject project = new JsonObject();
+        JsonObject description = new JsonObject();
+        JsonObject issueType = new JsonObject();
+
+        project.addProperty("key", "AT");
+        project.addProperty("name", "automated-test");
+
+        description.addProperty("type", "doc");
+        description.addProperty("version", 1);
+        description.add("content", createContentArray(issueDescription));
+
+        issueType.addProperty("name", "Bug");
+
+        fields.add("project", project);
+        fields.addProperty("summary", issueSummary);
+        fields.add("description", description);
+        fields.add("issuetype", issueType);
+
+        payload.add("fields", fields);
+
+        Gson gson = new Gson();
+        return gson.toJson(payload);
     }
 
-    public void addAttachmentToJiraIssue(String issueId, String filePath) throws ClientProtocolException, IOException
-    {
-        String pathname= filePath;
+    private static JsonArray createContentArray(String issueDescription) {
+        JsonObject content = new JsonObject();
+        JsonObject text = new JsonObject();
+        JsonArray contentArray = new JsonArray();
+        JsonArray innerContentArray = new JsonArray();
+
+        text.addProperty("text", issueDescription);
+        text.addProperty("type", "text");
+
+        innerContentArray.add(text);
+
+        content.addProperty("type", "paragraph");
+        content.add("content", innerContentArray);
+
+        contentArray.add(content);
+
+        return contentArray;
+    }
+
+    public void addAttachmentToJiraIssue(String issueId, String filePath) throws ClientProtocolException, IOException {
+        String pathname = filePath;
         File fileUpload = new File(pathname);
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        String url = jiraURL+"/rest/api/3/issue/"+issueId+"/attachments";
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        String url = jiraURL + "/rest/api/3/issue/" + issueId + "/attachments";
         HttpPost postRequest = new HttpPost(url);
 
-        String encoding = Base64.getEncoder().encodeToString((jiraUserName+":"+jiraAccessKey).getBytes());
+        String encoding = Base64.getEncoder().encodeToString((jiraUserName + ":" + jiraAccessKey).getBytes());
 
         postRequest.setHeader("Authorization", "Basic " + encoding);
-        postRequest.setHeader("X-Atlassian-Token","nocheck");
+        postRequest.setHeader("X-Atlassian-Token", "nocheck");
 
-        MultipartEntityBuilder entity=MultipartEntityBuilder.create();
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
         entity.addPart("file", new FileBody(fileUpload));
-        postRequest.setEntity( entity.build());
+        postRequest.setEntity(entity.build());
         HttpResponse response = httpClient.execute(postRequest);
         System.out.println(response.getStatusLine());
 
-        if(response.getStatusLine().toString().contains("200 OK")){
+        if (response.getStatusLine().toString().contains("200 OK")) {
             System.out.println("Attachment uploaded");
-        } else{
+        } else {
             System.out.println("Attachment not uploaded");
         }
     }
-
 }
