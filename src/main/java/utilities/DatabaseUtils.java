@@ -1,38 +1,45 @@
 package utilities;
 import models.Item;
+import models.NewTableModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseUtils {
 
     public DatabaseUtils() {
+
     }
 
-    public void readItems() {
+    public static List<NewTableModel> readItems() throws SQLException {
+        List<NewTableModel> result = new ArrayList<>();
         String query = "SELECT * FROM test_schema.new_table";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
-             Connection connection = dbConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+            Connection connection = dbConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                int value = resultSet.getInt("value");
-
-                System.out.printf("ID: %d, Name: %s, Value: %d%n", id, name, value);
+                NewTableModel newTable = new NewTableModel();
+                newTable.id = resultSet.getInt("id");
+                newTable.name = resultSet.getString("name");
+                newTable.value = resultSet.getInt("value");
+                result.add(newTable);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
+        return result;
     }
 
-    public int insertItem(String name, int value) {
+    public static int insertItem(String name, int value) {
         String query = "INSERT INTO `test_schema`.`new_table` (`name`, `value`) VALUES (?, ?)";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
@@ -55,8 +62,8 @@ public class DatabaseUtils {
         return -1;
     }
 
-    public void updateItem(int id, String newName, int newValue) {
-        String query = "UPDATE `test_schema`.`new_table` SET name = ?, value = ? WHERE id = ?";
+    public static void updateItem(int id, String newName, int newValue) {
+        String query = "UPDATE `test_schema`.`new_table2` SET name = ?, value = ? WHERE id = ?";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -76,7 +83,7 @@ public class DatabaseUtils {
         }
     }
 
-    public void deleteItem(int id) {
+    public static void deleteItem(int id) {
         String query = "DELETE FROM `test_schema`.`new_table` WHERE id = ?";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();

@@ -26,6 +26,7 @@ Feature: HttpRequest
 
     Given Get URL from config
     When Calling the PUT "api/lessons/2317" endpoint with the given body: "src/main/resources/requestsBodyJsons/lesson2317.json"
+    Then Receiving 200
     Then Receiving id 2317
     
     @APITest

@@ -159,13 +159,4 @@ public class HttpRequests {
         return new CustomResponse(responseCode, responseString);
     }
 
-    public static CustomResponse sendRequestWithBasicAuth(String method, String url, String requestBody, String authHeaderValue) {
-        try {
-            return sendRequest(method, url, requestBody, authHeaderValue);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }
