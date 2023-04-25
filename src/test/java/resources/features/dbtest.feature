@@ -15,12 +15,12 @@ Feature: DBTest
   @DBTest
   Scenario: Update the value of an existing item in the table
     Given the database connection is established
-    When update item with ID 106 with name is "UpdatedItem" and updated value is 200 data
+    When update item with ID 107 with name is "UpdatedItem" and updated value is 200 data
     Then the item in the table should have the new values "UpdatedItem" and 200
 
   @DBTest
   Scenario: Delete an existing item from the table
     Given the database connection is established
-    When delete item with ID 104
+    When delete item with ID 105
     Then the item should be removed from the table
 

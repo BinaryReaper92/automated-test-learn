@@ -23,9 +23,18 @@ public class JiraUtils {
     String jiraUserName = ConfigLoader.getJiraUser();
     String jiraAccessKey = ConfigLoader.getJiraKey();
 
-    public String createJiraIssue(String issueSummary, String issueDescription) throws IOException {
-        String issueId = null;
+    String issueSummary;
+    String issueDescription;
+    String issueId = null;
 
+    public JiraUtils(String issueSummary, String issueDescription) throws IOException {
+        this.issueSummary = issueSummary;
+        this.issueDescription = issueDescription.replaceAll("\\r?\\n", "\n");
+
+        this.createJiraIssue();
+    }
+
+    public String createJiraIssue() throws IOException {
         String urlString = jiraURL + "/rest/api/3/issue";
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -39,7 +48,7 @@ public class JiraUtils {
 
         connection.setDoOutput(true);
         try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = createPayloadForCreateJiraIssue(issueSummary, issueDescription).getBytes(StandardCharsets.UTF_8);
+            byte[] input = createPayloadForCreateJiraIssue().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
 
@@ -60,7 +69,7 @@ public class JiraUtils {
         return issueId;
     }
 
-    private static String createPayloadForCreateJiraIssue(String issueSummary, String issueDescription) {
+    private String createPayloadForCreateJiraIssue() {
         JsonObject payload = new JsonObject();
         JsonObject fields = new JsonObject();
         JsonObject project = new JsonObject();
@@ -87,7 +96,7 @@ public class JiraUtils {
         return gson.toJson(payload);
     }
 
-    private static JsonArray createContentArray(String issueDescription) {
+    private JsonArray createContentArray(String issueDescription) {
         JsonObject content = new JsonObject();
         JsonObject text = new JsonObject();
         JsonArray contentArray = new JsonArray();
@@ -106,9 +115,8 @@ public class JiraUtils {
         return contentArray;
     }
 
-    public void addAttachmentToJiraIssue(String issueId, String filePath) throws ClientProtocolException, IOException {
-        String pathname = filePath;
-        File fileUpload = new File(pathname);
+    public void addAttachmentToJiraIssue(String filePath) throws IOException {
+        File fileUpload = new File(filePath);
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String url = jiraURL + "/rest/api/3/issue/" + issueId + "/attachments";

@@ -3,10 +3,16 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import models.NewTableModel;
 import testObjects.DBTestTest;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 public class DBTestSteps {
     private DBTestTest dbTestTest;
+    private List<NewTableModel> dbResultSet;
 
     @Given("the database connection is established")
     public void theDatabaseConnectionIsEstablished() {
@@ -14,13 +20,13 @@ public class DBTestSteps {
     }
 
     @When("the user reads all items from the table")
-    public void theUserReadsAllItemsFromTheTable() {
-        dbTestTest.readItems();
+    public void theUserReadsAllItemsFromTheTable() throws SQLException {
+        dbResultSet = dbTestTest.readItems();
     }
 
     @Then("the items should be displayed on the console")
-    public void theItemsShouldBeDisplayedOnTheConsole() {
-        //readItems console
+    public void theItemsShouldBeDisplayedOnTheConsole(){
+        dbTestTest.PrintReadItems(dbResultSet);
     }
 
     @When("a new item with name {string} and value {int}")

@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 public class OwnTrace {
     public static void trace(String sMessage)
     {
+        Log4j.info(sMessage);
         System.out.println( "[MYTRACE]" + sMessage );
         executeJavaScript("console.log(`"+sMessage+"`)");
     }

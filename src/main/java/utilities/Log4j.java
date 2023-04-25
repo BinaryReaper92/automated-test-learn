@@ -13,6 +13,7 @@ import java.util.Date;
 public class Log4j {
 
     private static Logger log = Logger.getLogger(Log4j.class.getName());
+    static String logFileName = "./Log4j/log4j-application.log";
 
     public static void log4jSetup(){
         String log4jConfPath = System.getProperty("user.dir")+"//src//main//resources//log4j.properties";
@@ -32,16 +33,20 @@ public class Log4j {
 
         log.info(message);
     }
+    public static void error (String message) {
+
+        log.error(message);
+    }
 
     static {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         System.setProperty("testRunTimestamp", timestamp);
+        Log4j.logFileName = "./Log4j/log4j-application_" + System.getProperty("testRunTimestamp") + ".log";
     }
 
     public static String readLogFile() {
-        String logFileName = "./Log4j/log4j-application_" + System.getProperty("testRunTimestamp") + ".log";
         try {
-            return new String(Files.readAllBytes(Paths.get(logFileName)), StandardCharsets.UTF_8);
+            return new String(Files.readAllBytes(Paths.get(Log4j.logFileName)), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

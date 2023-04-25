@@ -1,35 +1,43 @@
 package testObjects;
 
 import models.Item;
+import models.NewTableModel;
+import org.testng.Assert;
 import utilities.DatabaseUtils;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import static org.testng.AssertJUnit.*;
 
 public class DBTestTest {
-    private DatabaseUtils databaseUtils;
     private int latestItemId;
     private int updatedItemId;
     private int deletedItemId;
+    private ResultSet dbResultSet;
 
-    public DBTestTest() {
-        databaseUtils = new DatabaseUtils();
+    public List<NewTableModel> readItems() throws SQLException {
+        return DatabaseUtils.readItems();
     }
 
-    public void readItems() {
-        databaseUtils.readItems();
+    public void PrintReadItems(List<NewTableModel> newTableList){
+        for(NewTableModel newTable : newTableList) {
+            System.out.printf("ID: %d, Name: %s, Value: %d%n", newTable.id, newTable.name, newTable.value);
+        }
     }
 
     public void insertItem(String name, int value) {
-        latestItemId = databaseUtils.insertItem(name, value);
+        latestItemId = DatabaseUtils.insertItem(name, value);
     }
 
     public void updateItem(int id, String newName, int newValue) {
-        databaseUtils.updateItem(id, newName, newValue);
+        DatabaseUtils.updateItem(id, newName, newValue);
         updatedItemId = id;
     }
 
     public void deleteItem(int id) {
-        databaseUtils.deleteItem(id);
+        DatabaseUtils.deleteItem(id);
         deletedItemId = id;
     }
 

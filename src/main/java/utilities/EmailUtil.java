@@ -62,7 +62,7 @@ public class EmailUtil {
 
     public static void sendReportEmail(Scenario scenario, File reportFile) {
         String subject = "Cucumber Test Report - " + scenario.getName();
-        String body = "Please find the attached Cucumber test report.";
+        String body = "Please find the attached Cucumber test report. \n\n"+CucumberEventListener.EventMessages;
 
         try {
             sendEmailWithAttachment(subject, body, reportFile);
