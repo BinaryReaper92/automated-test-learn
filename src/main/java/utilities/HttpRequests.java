@@ -5,6 +5,7 @@ import models.CustomResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -100,6 +101,67 @@ public class HttpRequests {
             CustomResponse response = sendRequest("DELETE", url + requestUrl, null, bearerToken);
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static CustomResponse uploadFile(String method, String url, String filePath, String authHeader, String customHeaderKey, String customHeaderValue) throws IOException {
+        URL endpoint = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
+
+        connection.setRequestMethod(method);
+        connection.setRequestProperty("Content-Type", "multipart/form-data");
+        connection.setRequestProperty("Authorization", authHeader);
+        connection.setRequestProperty(customHeaderKey, customHeaderValue);
+
+        File file = new File(filePath);
+        String boundary = "===" + System.currentTimeMillis() + "===";
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+
+        try (OutputStream outputStream = connection.getOutputStream();
+             FileInputStream fileInputStream = new FileInputStream(file)) {
+
+            outputStream.write(("--" + boundary + "\r\n").getBytes());
+            outputStream.write(("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"\r\n").getBytes());
+            outputStream.write(("Content-Type: " + URLConnection.guessContentTypeFromName(file.getName()) + "\r\n").getBytes());
+            outputStream.write(("Content-Transfer-Encoding: binary\r\n\r\n").getBytes());
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.write(("\r\n--" + boundary + "--\r\n").getBytes());
+        }
+
+        int responseCode = connection.getResponseCode();
+        String responseString;
+
+        InputStream inputStream;
+        if (responseCode >= 200 && responseCode <= 299) {
+            inputStream = connection.getInputStream();
+        } else {
+            inputStream = connection.getErrorStream();
+        }
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            StringBuilder responseBuilder = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                responseBuilder.append(line);
+            }
+            responseString = responseBuilder.toString();
+        }
+
+        return new CustomResponse(responseCode, responseString);
+    }
+
+    public static CustomResponse sendRequestWithBasicAuth(String method, String url, String requestBody, String authHeaderValue) {
+        try {
+            return sendRequest(method, url, requestBody, authHeaderValue);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
