@@ -15,7 +15,7 @@ public class ExcelUtilities {
     public static XSSFRow row;
     public static XSSFCell cell;
     public static XSSFCellStyle style;
-    public static String path = "D:\\Learn\\automated-test-skeleton/Szakdoga_Tesztesetek.xlsx";
+    public static String path = "./Szakdoga_Tesztesetek.xlsx";
 
 
     public static void setCellData(String xlfile,String xlsheet,int rownum,int colnum,String data) throws IOException

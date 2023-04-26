@@ -3,9 +3,6 @@ package utilities;
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CucumberEventListener implements ConcurrentEventListener {
     public static String EventMessages = null;
 

@@ -1,5 +1,5 @@
 package utilities;
-import models.Item;
+import models.ItemModel;
 import models.NewTableModel;
 
 import java.sql.Connection;
@@ -63,7 +63,7 @@ public class DatabaseUtils {
     }
 
     public static void updateItem(int id, String newName, int newValue) {
-        String query = "UPDATE `test_schema`.`new_table2` SET name = ?, value = ? WHERE id = ?";
+        String query = "UPDATE `test_schema`.`new_table` SET name = ?, value = ? WHERE id = ?";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -101,9 +101,9 @@ public class DatabaseUtils {
             e.printStackTrace();
         }
     }
-    public static Item getItemById(int id) {
+    public static ItemModel getItemById(int id) {
         String query = "SELECT * FROM test_schema.new_table WHERE id = ?";
-        Item item = null;
+        ItemModel itemModel = null;
         ResultSet resultSet = null;
 
         try (DatabaseConnection dbConnection = new DatabaseConnection();
@@ -113,7 +113,7 @@ public class DatabaseUtils {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                item = new Item(
+                itemModel = new ItemModel(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getInt("value")
@@ -131,6 +131,6 @@ public class DatabaseUtils {
             }
         }
 
-        return item;
+        return itemModel;
     }
 }

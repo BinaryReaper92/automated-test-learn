@@ -14,7 +14,7 @@ public class HttpRequests {
 
     public static CustomResponse PostAPI(String url, String isLogin, String requestBody, String requestUrl) {
         try {
-            String bearerToken = isLogin.equals("logged out") ? null : JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+            String bearerToken = isLogin.equals("logged out") ? null : JSONUtils.getRequestBody("./resources/bearerToken.txt");
             CustomResponse response = sendRequest("POST", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
 
             if (isLogin.equals("logged out")) {
@@ -72,7 +72,7 @@ public class HttpRequests {
     }
 
     public static CustomResponse GetAPI(String url, String requestUrl) {
-        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
             CustomResponse response = sendRequest("GET", url + requestUrl, null, bearerToken);
             response.setResponseList(JSONUtils.parseJsonArrayFromString(response.getResponseString()));
@@ -84,7 +84,7 @@ public class HttpRequests {
     }
 
     public static CustomResponse PutAPI(String url, String requestBody, String requestUrl) {
-        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
             CustomResponse response = sendRequest("PUT", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
@@ -96,7 +96,7 @@ public class HttpRequests {
     }
 
     public static CustomResponse DeleteAPI(String url, String requestBody, String requestUrl) {
-        String bearerToken = JSONUtils.getRequestBody("src/main/resources/bearerToken.txt");
+        String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
             CustomResponse response = sendRequest("DELETE", url + requestUrl, null, bearerToken);
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));

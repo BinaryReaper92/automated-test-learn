@@ -19,7 +19,7 @@ public class JSONUtils {
     }
 
     public static void bearerTokenWriter(String bearerToken) {
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/bearerToken.txt")) {
+        try (FileWriter fileWriter = new FileWriter("./resources/bearerToken.txt")) {
             fileWriter.write(bearerToken);
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class JSONUtils {
         BufferedWriter writer = null;
         try {
 
-            writer = new BufferedWriter(new FileWriter("src/main/resources/requestsBodyJsons/getCompanies.json"));
+            writer = new BufferedWriter(new FileWriter("./resources/requestsBodyJsons/getCompanies.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }

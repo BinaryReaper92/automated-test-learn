@@ -1,8 +1,6 @@
 package testObjects;
 
-import lombok.extern.slf4j.Slf4j;
 import pageObjects.LoginPage;
-import utilities.Log4j;
 import utilities.OwnClick;
 import utilities.OwnSendKeys;
 
