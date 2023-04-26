@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Item {
-    private final int id;
+public class ItemModel {
+    public final int id;
     @NonNull
-    private String name;
-    private int value;
+    public String name;
+    public int value;
 }

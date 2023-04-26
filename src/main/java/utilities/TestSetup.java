@@ -3,12 +3,8 @@ package utilities;
 import com.codeborne.selenide.Configuration;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import org.json.simple.parser.ParseException;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
 
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
@@ -21,7 +17,7 @@ public class TestSetup {
         Log4j.startLog("Test is starting");
 
         Configuration.screenshots = true;
-        System.setProperty("selenide.reportsFolder", "D:/Learn/automated-test-skeleton/Selenide/Screenshots");
+        System.setProperty("selenide.reportsFolder", "./Selenide/Screenshots");
         System.setProperty("selenide.browser", "chrome");
         Configuration.browser = "chrome";
         //      System.setProperty("selenide.browser", "firefox");
@@ -34,7 +30,7 @@ public class TestSetup {
     }
 
     @After
-    public void tearDown(io.cucumber.java.Scenario scenario) throws IOException, ParseException, InterruptedException, ParserConfigurationException, SAXException {
+    public void tearDown(io.cucumber.java.Scenario scenario)  {
 
         if (scenario.isFailed()) {
 

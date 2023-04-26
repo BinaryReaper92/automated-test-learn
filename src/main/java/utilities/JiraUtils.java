@@ -3,18 +3,12 @@ package utilities;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Base64;
 
 public class JiraUtils {
@@ -117,23 +111,42 @@ public class JiraUtils {
 
     public void addAttachmentToJiraIssue(String filePath) throws IOException {
         File fileUpload = new File(filePath);
+        String boundary = "----JiraAttachmentBoundary" + System.currentTimeMillis();
 
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String url = jiraURL + "/rest/api/3/issue/" + issueId + "/attachments";
-        HttpPost postRequest = new HttpPost(url);
+        URL obj = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
 
         String encoding = Base64.getEncoder().encodeToString((jiraUserName + ":" + jiraAccessKey).getBytes());
+        connection.setRequestProperty("Authorization", "Basic " + encoding);
+        connection.setRequestProperty("X-Atlassian-Token", "nocheck");
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 
-        postRequest.setHeader("Authorization", "Basic " + encoding);
-        postRequest.setHeader("X-Atlassian-Token", "nocheck");
+        try (OutputStream os = connection.getOutputStream(); BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os))) {
+            writer.write("--" + boundary);
+            writer.newLine();
 
-        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
-        entity.addPart("file", new FileBody(fileUpload));
-        postRequest.setEntity(entity.build());
-        HttpResponse response = httpClient.execute(postRequest);
-        System.out.println(response.getStatusLine());
+            writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"" + fileUpload.getName() + "\"");
+            writer.newLine();
+            writer.write("Content-Type: " + Files.probeContentType(fileUpload.toPath()));
+            writer.newLine();
+            writer.newLine();
 
-        if (response.getStatusLine().toString().contains("200 OK")) {
+            writer.flush();
+            Files.copy(fileUpload.toPath(), os);
+            os.flush();
+            writer.newLine();
+
+            writer.write("--" + boundary + "--");
+            writer.newLine();
+        }
+
+        int responseCode = connection.getResponseCode();
+        System.out.println("Response Code: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
             System.out.println("Attachment uploaded");
         } else {
             System.out.println("Attachment not uploaded");

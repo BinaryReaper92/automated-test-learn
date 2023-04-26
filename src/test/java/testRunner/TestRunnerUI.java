@@ -2,9 +2,7 @@ package testRunner;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import utilities.CucumberEventListener;
 
 public class TestRunnerUI {
 
