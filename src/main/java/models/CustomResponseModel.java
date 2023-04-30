@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
-public class CustomResponse {
+public class CustomResponseModel {
     private final int statusCode;
     @NonNull
     private final String responseString;

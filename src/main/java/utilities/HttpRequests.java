@@ -1,6 +1,6 @@
 package utilities;
 
-import models.CustomResponse;
+import models.CustomResponseModel;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -12,10 +12,10 @@ import java.util.HashMap;
 
 public class HttpRequests {
 
-    public static CustomResponse PostAPI(String url, String isLogin, String requestBody, String requestUrl) {
+    public static CustomResponseModel PostAPI(String url, String isLogin, String requestBody, String requestUrl) {
         try {
             String bearerToken = isLogin.equals("logged out") ? null : JSONUtils.getRequestBody("./resources/bearerToken.txt");
-            CustomResponse response = sendRequest("POST", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
+            CustomResponseModel response = sendRequest("POST", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
 
             if (isLogin.equals("logged out")) {
                 HashMap<String, Object> responseMap = JSONUtils.parseJsonFromString(response.getResponseString());
@@ -31,7 +31,7 @@ public class HttpRequests {
         }
     }
 
-    public static CustomResponse sendRequest(String method, String url, String requestBody, String bearerToken) throws IOException {
+    public static CustomResponseModel sendRequest(String method, String url, String requestBody, String bearerToken) throws IOException {
         URL endpoint = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
 
@@ -68,13 +68,13 @@ public class HttpRequests {
             responseString = responseBuilder.toString();
         }
 
-        return new CustomResponse(responseCode, responseString);
+        return new CustomResponseModel(responseCode, responseString);
     }
 
-    public static CustomResponse GetAPI(String url, String requestUrl) {
+    public static CustomResponseModel GetAPI(String url, String requestUrl) {
         String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
-            CustomResponse response = sendRequest("GET", url + requestUrl, null, bearerToken);
+            CustomResponseModel response = sendRequest("GET", url + requestUrl, null, bearerToken);
             response.setResponseList(JSONUtils.parseJsonArrayFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
@@ -83,10 +83,10 @@ public class HttpRequests {
         }
     }
 
-    public static CustomResponse PutAPI(String url, String requestBody, String requestUrl) {
+    public static CustomResponseModel PutAPI(String url, String requestBody, String requestUrl) {
         String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
-            CustomResponse response = sendRequest("PUT", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
+            CustomResponseModel response = sendRequest("PUT", url + requestUrl, JSONUtils.getRequestBody(requestBody), bearerToken);
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
@@ -95,10 +95,10 @@ public class HttpRequests {
         }
     }
 
-    public static CustomResponse DeleteAPI(String url, String requestBody, String requestUrl) {
+    public static CustomResponseModel DeleteAPI(String url, String requestBody, String requestUrl) {
         String bearerToken = JSONUtils.getRequestBody("./resources/bearerToken.txt");
         try {
-            CustomResponse response = sendRequest("DELETE", url + requestUrl, null, bearerToken);
+            CustomResponseModel response = sendRequest("DELETE", url + requestUrl, null, bearerToken);
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
@@ -106,7 +106,7 @@ public class HttpRequests {
             return null;
         }
     }
-    public static CustomResponse uploadFile(String method, String url, String filePath, String authHeader, String customHeaderKey, String customHeaderValue) throws IOException {
+    public static CustomResponseModel uploadFile(String method, String url, String filePath, String authHeader, String customHeaderKey, String customHeaderValue) throws IOException {
         URL endpoint = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
 
@@ -156,7 +156,7 @@ public class HttpRequests {
             responseString = responseBuilder.toString();
         }
 
-        return new CustomResponse(responseCode, responseString);
+        return new CustomResponseModel(responseCode, responseString);
     }
 
 }

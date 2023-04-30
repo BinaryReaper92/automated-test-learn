@@ -1,7 +1,7 @@
 package testObjects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.CustomResponse;
+import models.CustomResponseModel;
 import utilities.ConfigLoader;
 import utilities.HttpRequests;
 import utilities.JSONUtils;
@@ -12,29 +12,29 @@ import java.util.Map;
 public class HttpRequestTest {
 
     private String requestBaseURI;
-    private CustomResponse response;
+    private CustomResponseModel response;
 
     public void setRequestBaseURI() {
         requestBaseURI = ConfigLoader.getAppURI();
     }
 
-    public CustomResponse postRequest(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {
+    public CustomResponseModel postRequest(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {
         response = HttpRequests.PostAPI(requestBaseURI, isLoggedIn, bodyJson, requestUrl);
         System.out.println(response);
         return response;
     }
 
-    public CustomResponse getRequest(String requestUrl) {
+    public CustomResponseModel getRequest(String requestUrl) {
         response = HttpRequests.GetAPI(requestBaseURI, requestUrl);
         return response;
     }
 
-    public CustomResponse putRequest(String requestUrl, String requestBody) {
+    public CustomResponseModel putRequest(String requestUrl, String requestBody) {
         response = HttpRequests.PutAPI(requestBaseURI, requestBody, requestUrl);
         return response;
     }
 
-    public CustomResponse deleteRequest(String requestUrl) {
+    public CustomResponseModel deleteRequest(String requestUrl) {
         response = HttpRequests.DeleteAPI(requestBaseURI, null, requestUrl);
         return response;
     }
@@ -43,11 +43,11 @@ public class HttpRequestTest {
         return response.getStatusCode();
     }
 
-    public void setResponse(CustomResponse response) {
+    public void setResponse(CustomResponseModel response) {
         this.response = response;
     }
 
-    public CustomResponse getResponse() {
+    public CustomResponseModel getResponse() {
         return response;
     }
 
