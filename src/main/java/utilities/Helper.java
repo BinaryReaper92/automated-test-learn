@@ -1,15 +1,14 @@
 package utilities;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
@@ -22,6 +21,12 @@ public class Helper {
                 .pollingEvery(Duration.ofMillis(500))
                 .ignoring(Exception.class);
         wait.until(SelenideElement::isDisplayed);
+    }
+
+    public static void compareText(SelenideElement element, String expectedText) {
+        String actualText = element.shouldBe(Condition.visible).getText();
+        Log4j.info("Comparing actual text: "+actualText +" to expected text: "+expectedText+ " .");
+        Assert.assertEquals(actualText, expectedText, "Text comparison failed: ");
     }
 
     public static void waitForPageLoad(WebDriver driver, long timeoutSeconds) {

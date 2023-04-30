@@ -53,6 +53,19 @@ public class ConfigLoader {
     public static String getDBPassword(){
         return props.getProperty("db.password");
     }
+    public static String getWrongUser(){
+        return props.getProperty("wrong.username");
+    }
+    public static String getWrongPassword(){
+        return props.getProperty("wrong.password");
+    }
+    public static String getNonExistUser(){
+        return props.getProperty("nonExist.username");
+    }
+    public static String getNonExistPassword(){
+        return props.getProperty("nonExist.password");
+    }
+
 
 }
 

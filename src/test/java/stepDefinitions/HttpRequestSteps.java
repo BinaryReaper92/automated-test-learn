@@ -3,7 +3,7 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import models.CustomResponse;
+import models.CustomResponseModel;
 import org.testng.Assert;
 import testObjects.HttpRequestTest;
 
@@ -20,7 +20,7 @@ public class HttpRequestSteps {
 
     @When("Calling the POST {string} endpoint with the given body: {string} while {string}")
     public void calling_the_post_request(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {
-        CustomResponse response = httpRequestTest.postRequest(requestUrl, bodyJson, isLoggedIn);
+        CustomResponseModel response = httpRequestTest.postRequest(requestUrl, bodyJson, isLoggedIn);
         httpRequestTest.setResponse(response);
     }
 
@@ -33,20 +33,20 @@ public class HttpRequestSteps {
 
     @When("Calling the GET {string} endpoint")
     public void calling_the_get_endpoint(String requestUrl) {
-        CustomResponse response = httpRequestTest.getRequest(requestUrl);
+        CustomResponseModel response = httpRequestTest.getRequest(requestUrl);
         httpRequestTest.setResponse(response);
         httpRequestTest.printResponseBodyIfStatusOk();
     }
 
     @When("Calling the PUT {string} endpoint with the given body: {string}")
     public void calling_the_put_endpoint(String requestUrl, String bodyJson) {
-        CustomResponse response = httpRequestTest.putRequest(requestUrl, bodyJson);
+        CustomResponseModel response = httpRequestTest.putRequest(requestUrl, bodyJson);
         httpRequestTest.setResponse(response);
     }
 
     @When("Calling the DELETE {string} endpoint")
     public void calling_the_delete_endpoint(String requestUrl) {
-        CustomResponse response = httpRequestTest.deleteRequest(requestUrl);
+        CustomResponseModel response = httpRequestTest.deleteRequest(requestUrl);
         httpRequestTest.setResponse(response);
     }
 

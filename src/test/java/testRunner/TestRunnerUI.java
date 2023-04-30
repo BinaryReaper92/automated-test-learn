@@ -11,7 +11,7 @@ public class TestRunnerUI {
             (
                     features = "src\\test\\java\\resources\\features\\",
                     glue = {"stepDefinitions","utilities"},
-                    tags = "@SmokeTest",
+                    tags = "@RegressionTest",
                     dryRun = false,
                     plugin = {"pretty", "html:Reports/Report.html","json:Reports/Report.json","junit:Reports/Report.xml","utilities.CucumberEventListener"}
 
