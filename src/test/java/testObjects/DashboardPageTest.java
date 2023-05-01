@@ -11,9 +11,10 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class DashboardPageTest {
 
+    private static final DashboardPage dashboardPage = page(DashboardPage.class);
+
     public static void checkIfPageTitleIs(String title) {
         Log4j.info("Checking page title");
-        DashboardPage dashboardPage = page(DashboardPage.class);
         SelenideElement element = dashboardPage.getDashboardPageTitle();
         CustomFluentWait.fluentWait(element, Condition.visible, 6, 500);
         element.shouldHave(Condition.text(title));
