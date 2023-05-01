@@ -1,25 +1,28 @@
 package testObjects;
 
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import pageObjects.LoginPage;
-import utilities.CustomFluentWait;
+import utilities.ConfigLoader;
+import utilities.Log4j;
 import utilities.OwnClick;
 import utilities.OwnSendKeys;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.*;
+
 
 
 public class LoginPageTest{
     private static final LoginPage loginPage = page(LoginPage.class);
     private static String initialButtonColor;
+
+    public static void openWebsite(String url){
+        String website = ConfigLoader.getAppUrl() + url;
+        Log4j.info("Opening the website:" + website);
+        Selenide.open(website);
+    }
 
     public static void setUserName(String username) throws Exception {
 

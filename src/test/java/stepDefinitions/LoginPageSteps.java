@@ -15,9 +15,7 @@ public class LoginPageSteps {
 
     @Given("Admin opens URL {string}")
     public void admin_opens_url(String url) {
-        String website = ConfigLoader.getAppUrl() + url;
-        Log4j.info("Opening the website:" + website);
-        Selenide.open(website);
+        LoginPageTest.openWebsite(url);
     }
 
 
@@ -153,6 +151,4 @@ public class LoginPageSteps {
         LoginPageTest.clickForgotPasswordButton();
         
     }
-
-
 }

@@ -57,7 +57,7 @@ Feature: Login
     And Admin click on Login
     Then Error message should display as "Incorrect Email or Password!"
 
-  @RegressionTest @SmokeTest
+  @RegressionTest
   Scenario: Login Button color change on Hoover
     Given Admin opens URL "login"
     And Admin Hoover on Login button
@@ -75,4 +75,4 @@ Feature: Login
   Scenario: Open forgot password modal
     Given Admin opens URL "login"
     And Admin click on Forgot password
-    Then Forgot password modal should appear
+    Then Forgot password modal should appear with title "Forgot password"

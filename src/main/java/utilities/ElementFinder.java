@@ -21,7 +21,7 @@ public class ElementFinder {
 
     public static SelenideElement myFindElementByCSS(String locator){
         try {
-            return $(By.cssSelector(locator)).shouldBe(visible);
+            return $(locator);
         } catch (NoSuchElementException e) {
             OwnTrace.trace("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
@@ -73,6 +73,9 @@ public class ElementFinder {
         element = myFindElementByXpath(locator);
 
         if (element == null) {
+            element = myFindElementByCSS(locator);
+        }
+        if (element == null) {
             element = myFindElementById(locator);
         }
         if (element == null) {
@@ -83,9 +86,6 @@ public class ElementFinder {
         }
         if (element == null) {
             element = myFindElementByLinkText(locator);
-        }
-        if (element == null) {
-            element = myFindElementByCSS(locator);
         }
         if (element == null) {
             OwnTrace.trace("Unable to find element: '"+locator+"'");
