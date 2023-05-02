@@ -35,7 +35,7 @@ public class OwnSendKeys {
         return true;
     }
 
-    public static boolean javaScriptSendKeys (SelenideElement element, String text) throws Exception {
+    private static boolean javaScriptSendKeys (SelenideElement element, String text) throws Exception {
         JavascriptExecutor js = (JavascriptExecutor) getWebDriver();
         try {
             if (element.isEnabled() && element.isDisplayed()) {
@@ -63,7 +63,7 @@ public class OwnSendKeys {
         return true;
     }
 
-    public static boolean jquerySendKeys(SelenideElement element, String text) {
+    private static boolean jquerySendKeys(SelenideElement element, String text) {
         JavascriptExecutor js = (JavascriptExecutor) getWebDriver();
 
         try {if (element.isEnabled() && element.isDisplayed()) {
