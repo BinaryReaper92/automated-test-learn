@@ -12,6 +12,10 @@ import org.testng.Assert;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 public class Helper {
@@ -87,4 +91,25 @@ public class Helper {
     public static void selectOption(SelenideElement element, String option) {
         element.selectOption(option);
     }
+
+    public static void setClipboardContent(String content) {
+        StringSelection stringSelection = new StringSelection(content);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
+    public static void windowsHelper() throws AWTException, InterruptedException {
+        Robot robot = new Robot();
+        // Press Ctrl + V to paste the file path
+        Thread.sleep(500);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+
+        // Press Enter to confirm the file selection
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+    }
+
 }

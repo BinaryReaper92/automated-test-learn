@@ -67,6 +67,15 @@ public class ElementFinder {
         }
         return null;
     }
+    public static SelenideElement myFindElementByClass(String locator){
+        try {
+            return $(By.className(locator));
+        } catch (NoSuchElementException e) {
+            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            System.out.println("Unable to find element " + e.getMessage());
+        }
+        return null;
+    }
 
     public static SelenideElement myFindElement(String locator){
         SelenideElement element = null;
@@ -77,6 +86,9 @@ public class ElementFinder {
         }
         if (element == null) {
             element = myFindElementById(locator);
+        }
+        if (element == null) {
+            element = myFindElementByClass(locator);
         }
         if (element == null) {
             element = myFindElementByText(locator);

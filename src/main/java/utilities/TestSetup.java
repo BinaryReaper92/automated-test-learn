@@ -22,11 +22,11 @@ public class TestSetup {
         Configuration.browser = "chrome";
         //      System.setProperty("selenide.browser", "firefox");
         //      Configuration.browser = "firefox";
-        //       Configuration.browserSize = "maximize";
+               Configuration.browserSize = "maximize";
         Configuration.headless = false;
         Configuration.timeout = 15000;
         System.setProperty("selenide.timeout", "15000");
-        //Configuration.holdBrowserOpen=true;
+        Configuration.holdBrowserOpen=true;
     }
 
     @After
