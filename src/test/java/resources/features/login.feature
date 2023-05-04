@@ -1,6 +1,6 @@
 Feature: Login
 
-  @RegressionTest
+  @RegressionTest @SmokeTest
   Scenario: Successful login with valid credentials
 
     Given Admin opens URL "login"

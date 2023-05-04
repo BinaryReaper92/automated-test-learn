@@ -1,5 +1,6 @@
 package utilities;
 
+import com.codeborne.selenide.SelenideElement;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -33,9 +34,37 @@ public class Log4j {
 
         log.info(message);
     }
+    public static void info (SelenideElement element, String message) {
+
+        String sMessage = message;
+        if(element != null) {
+            sMessage =  sMessage + " " + element.getTagName();
+        }
+        log.info(sMessage);
+
+    }
+    public static void info(SelenideElement element, String message, Exception e )
+    {
+        String sMessage = message +" "+ element.getTagName() + e.getMessage();
+        log.info(sMessage);
+    }
     public static void error (String message) {
 
         log.error(message);
+    }
+    public static void error (SelenideElement element, String message) {
+
+        String sMessage = message;
+        if(element != null) {
+            sMessage =  sMessage + " " + element.getTagName();
+        }
+        log.error(sMessage);
+
+    }
+    public static void error(SelenideElement element, String message, Exception e )
+    {
+        String sMessage = message +" "+ element.getTagName() + e.getMessage();
+        log.error(sMessage);
     }
 
     static {

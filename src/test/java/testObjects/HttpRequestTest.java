@@ -2,7 +2,7 @@ package testObjects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.CustomResponseModel;
-import utilities.ConfigLoader;
+import utilities.ConfigReader;
 import utilities.HttpRequests;
 import utilities.JSONUtils;
 
@@ -15,7 +15,7 @@ public class HttpRequestTest {
     private CustomResponseModel response;
 
     public void setRequestBaseURI() {
-        requestBaseURI = ConfigLoader.getAppURI();
+        requestBaseURI = ConfigReader.getAppURI();
     }
 
     public CustomResponseModel postRequest(String requestUrl, String bodyJson, String isLoggedIn) throws IOException {

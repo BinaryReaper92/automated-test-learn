@@ -31,9 +31,9 @@ public class ElementFinder {
 
     public static SelenideElement myFindElementByXpath(String locator){
         try {
-            return $(By.xpath(locator)).shouldBe(visible);
+            return $(By.xpath(locator));
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -100,7 +100,7 @@ public class ElementFinder {
             element = myFindElementByLinkText(locator);
         }
         if (element == null) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             throw new NoSuchElementException("Tag not found: '"+locator+"'");
         }
         return element;

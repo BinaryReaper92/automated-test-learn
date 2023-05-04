@@ -13,9 +13,9 @@ import java.util.Base64;
 
 public class JiraUtils {
 
-    String jiraURL = ConfigLoader.getJiraURL();
-    String jiraUserName = ConfigLoader.getJiraUser();
-    String jiraAccessKey = ConfigLoader.getJiraKey();
+    String jiraURL = ConfigReader.getJiraURL();
+    String jiraUserName = ConfigReader.getJiraUser();
+    String jiraAccessKey = ConfigReader.getJiraKey();
 
     String issueSummary;
     String issueDescription;

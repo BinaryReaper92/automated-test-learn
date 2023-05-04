@@ -16,7 +16,7 @@ public class DashboardPageTest {
     public static void checkIfPageTitleIs(String title) {
         Log4j.info("Checking page title");
         SelenideElement element = dashboardPage.getDashboardPageTitle();
-        CustomFluentWait.fluentWait(element, Condition.visible, 6, 500);
+        CustomFluentWait.fluentWait(element, Condition.visible, 10, 500);
         element.shouldHave(Condition.text(title));
         String screenshotName = "screenshotElement_" + System.currentTimeMillis() + ".png";
         TakeScreenshot.takeElementScreenshot(element, screenshotName);

@@ -17,9 +17,9 @@ public class DatabaseUtils {
 
     }
 
-    public static List<NewTableModel> readItems() throws SQLException {
+    public static List<NewTableModel> readItems(String table) throws SQLException {
         List<NewTableModel> result = new ArrayList<>();
-        String query = "SELECT * FROM test_schema.new_table";
+        String query = "SELECT * FROM test_schema."+ table;
         try (DatabaseConnection dbConnection = new DatabaseConnection();
             Connection connection = dbConnection.getConnection();
             Statement statement = connection.createStatement();
@@ -39,8 +39,8 @@ public class DatabaseUtils {
         return result;
     }
 
-    public static int insertItem(String name, int value) {
-        String query = "INSERT INTO `test_schema`.`new_table` (`name`, `value`) VALUES (?, ?)";
+    public static int insertItem(String table, String name, int value) {
+        String query = "INSERT INTO `test_schema`.`"+table+"` (`name`, `value`) VALUES (?, ?)";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -62,8 +62,8 @@ public class DatabaseUtils {
         return -1;
     }
 
-    public static void updateItem(int id, String newName, int newValue) {
-        String query = "UPDATE `test_schema`.`new_table` SET name = ?, value = ? WHERE id = ?";
+    public static void updateItem(String table, int id, String newName, int newValue) {
+        String query = "UPDATE `test_schema`.`"+table+"` SET name = ?, value = ? WHERE id = ?";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -83,8 +83,8 @@ public class DatabaseUtils {
         }
     }
 
-    public static void deleteItem(int id) {
-        String query = "DELETE FROM `test_schema`.`new_table` WHERE id = ?";
+    public static void deleteItem(String table, int id) {
+        String query = "DELETE FROM `test_schema`.`"+table+"` WHERE id = ?";
         try (DatabaseConnection dbConnection = new DatabaseConnection();
              Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -101,8 +101,8 @@ public class DatabaseUtils {
             e.printStackTrace();
         }
     }
-    public static ItemModel getItemById(int id) {
-        String query = "SELECT * FROM test_schema.new_table WHERE id = ?";
+    public static ItemModel getItemById(String table, int id) {
+        String query = "SELECT * FROM test_schema."+table+" WHERE id = ?";
         ItemModel itemModel = null;
         ResultSet resultSet = null;
 
@@ -133,4 +133,6 @@ public class DatabaseUtils {
 
         return itemModel;
     }
+
+
 }

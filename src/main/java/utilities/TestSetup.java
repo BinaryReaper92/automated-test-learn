@@ -3,6 +3,7 @@ package utilities;
 import com.codeborne.selenide.Configuration;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 import java.io.File;
 
@@ -26,11 +27,11 @@ public class TestSetup {
         Configuration.headless = false;
         Configuration.timeout = 15000;
         System.setProperty("selenide.timeout", "15000");
-        Configuration.holdBrowserOpen=true;
+        Configuration.holdBrowserOpen=false;
     }
 
     @After
-    public void tearDown(io.cucumber.java.Scenario scenario)  {
+    public void tearDown(Scenario scenario)  {
 
         if (scenario.isFailed()) {
 
@@ -40,30 +41,30 @@ public class TestSetup {
             TakeScreenshot.takeScreenshot(screenshotName);
             Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
 
-            String bugCreation = ConfigLoader.getJiraCreate();
+            String bugCreation = ConfigReader.getJiraCreate();
             if (bugCreation.equalsIgnoreCase("yes")){
-                String issueS = "Automation Test Failed - "+scenario.getName();
-                String issueD = CucumberEventListener.EventMessages;//Log4j.readLogFile();
-                System.out.println(issueD);
+                String issueSummary = "Automation Test Failed - "+scenario.getName();
+                String issueDescription = CucumberEventListener.EventMessages;
+                System.out.println(issueDescription);
 
                 try {
-                    JiraUtils jiraU = new JiraUtils(issueS, issueD);
+                    JiraUtils jiraUtils = new JiraUtils(issueSummary, issueDescription);
 
                     try {
-                        jiraU.addAttachmentToJiraIssue(screenshotPath);
+                        jiraUtils.addAttachmentToJiraIssue(screenshotPath);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                     try {
-                        String htmlReportPath = "./Reports/emailable-report.html";
-                        jiraU.addAttachmentToJiraIssue(htmlReportPath);
+                        String htmlReportPath = "./test-output/emailable-report.html";
+                        jiraUtils.addAttachmentToJiraIssue(htmlReportPath);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     try {
 
                         String logPath = "./" + Log4j.logFileName;
-                        jiraU.addAttachmentToJiraIssue(logPath);
+                        jiraUtils.addAttachmentToJiraIssue(logPath);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -74,7 +75,7 @@ public class TestSetup {
             }
         }
 
-        File reportFile = new File("./Reports/emailable-report.html");
+        File reportFile = new File("./test-output/emailable-report.html");
         EmailUtil.sendReportEmail(scenario, reportFile);
 
         Log4j.endLog("Test is ending.");

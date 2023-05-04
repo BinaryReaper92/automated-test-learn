@@ -15,7 +15,7 @@ public class LessonsTest {
 
     public static void clickAddLessonButton() throws Exception {
         SelenideElement addLessonButton = lessonsPage.getAddLessonButton().shouldBe(visible);
-        OwnClick.baseClick(addLessonButton);
+        MyClick.myClick(addLessonButton);
     }
     public static void checkTabTitle(String tab) {
         Log4j.info("Checking tab title");
@@ -26,28 +26,28 @@ public class LessonsTest {
     public static void enterLessonTitle(String lessonTitle) throws Exception {
         Log4j.info("Entering Lesson Title");
         SelenideElement lessonTitleField = lessonsPage.getLessonTitle().shouldBe(visible);
-        OwnSendKeys.mySendKeys(lessonTitleField,lessonTitle);
+        MySendKeys.mySendKeys(lessonTitleField,lessonTitle);
     }
     public static void chooseCompany(String lessonCompany) throws Exception {
         Log4j.info("Choosing Company from dropdown");
         SelenideElement lessonCompanyDropdown = lessonsPage.getCompanyDropdown().shouldBe(visible);
-        OwnClick.baseClick(lessonCompanyDropdown);
+        MyClick.myClick(lessonCompanyDropdown);
         SelenideElement optionToSelect = lessonsPage.getCompanyTest();
-        OwnClick.baseClick(optionToSelect);
+        MyClick.myClick(optionToSelect);
 
     }
     public static void chooseSubsidiary(String lessonSubsidiary) throws Exception {
         Log4j.info("Choosing Subsidiary from dropdown");
         SelenideElement lessonSubsidiaryDropdown = lessonsPage.getSubsidiaryDropdown().shouldBe(visible);
-        OwnClick.baseClick(lessonSubsidiaryDropdown);
+        MyClick.myClick(lessonSubsidiaryDropdown);
         SelenideElement optionToSelect = lessonsPage.getSubsidiaryTest();
-        OwnClick.baseClick(optionToSelect);
+        MyClick.myClick(optionToSelect);
     }
     public static void choosePicture() throws Exception {
         Log4j.info("Adding picture");
-        String picturePath = "D:\\Learn\\automated-test-skeleton\\src\\main\\resources\\test.jpg";
+        String picturePath = ConfigReader.getTestPicture();
         SelenideElement dropOrBrowse = lessonsPage.getDropOrBrowse();
-        OwnClick.baseClick(dropOrBrowse);
+        MyClick.myClick(dropOrBrowse);
         Helper.setClipboardContent(picturePath);
         Helper.windowsHelper();
 
@@ -55,14 +55,14 @@ public class LessonsTest {
     public static void chooseTag(String lessonTag) throws Exception {
         Log4j.info("Choosing Company from dropdown");
         SelenideElement lessonTagDropdown = lessonsPage.getTagsDropdown().shouldBe(visible);
-        OwnClick.baseClick(lessonTagDropdown);
+        MyClick.myClick(lessonTagDropdown);
         SelenideElement optionToSelect = lessonsPage.getTagsTest();
-        OwnClick.baseClick(optionToSelect);
+        MyClick.myClick(optionToSelect);
     }
     public static void changeSwitchButton(String expectedLabelText) throws Exception {
         Log4j.info("Switch button to public");
         SelenideElement lessonSwitchButton = lessonsPage.getSwitchButton().shouldBe(visible);
-        OwnClick.baseClick(lessonSwitchButton);
+        MyClick.myClick(lessonSwitchButton);
         SelenideElement lessonSwitchButtonLabel = lessonsPage.getSwitchButtonLabelText();
         lessonSwitchButtonLabel.shouldHave(Condition.text(expectedLabelText));
     }
@@ -70,40 +70,40 @@ public class LessonsTest {
         Log4j.info("Entering Lesson Price");
         SelenideElement priceField = lessonsPage.getPriceField().shouldBe(visible);
         priceField.sendKeys(Keys.chord(Keys.SHIFT, Keys.END));
-        OwnSendKeys.mySendKeys(priceField, String.valueOf(lessonPrice));
+        MySendKeys.mySendKeys(priceField, String.valueOf(lessonPrice));
     }
     public static void enterAcceptanceRateValue(int lessonAcceptanceRate) throws Exception {
         Log4j.info("Entering Acceptance Rate Value");
         SelenideElement acceptanceRateField = lessonsPage.getAcceptanceRate().shouldBe(visible);
         acceptanceRateField.sendKeys(Keys.chord(Keys.SHIFT, Keys.END));
-        OwnSendKeys.mySendKeys(acceptanceRateField, String.valueOf(lessonAcceptanceRate));
+        MySendKeys.mySendKeys(acceptanceRateField, String.valueOf(lessonAcceptanceRate));
     }
     public static void enterNeedToPassInDayValue(int lessonNeedToPassInDay) throws Exception {
         Log4j.info("Entering Need To Pass In Day value");
         SelenideElement needToPassInDayField = lessonsPage.getNeedToPassInDay().shouldBe(visible);
         needToPassInDayField.sendKeys(Keys.chord(Keys.SHIFT, Keys.END));
-        OwnSendKeys.mySendKeys(needToPassInDayField, String.valueOf(lessonNeedToPassInDay));
+        MySendKeys.mySendKeys(needToPassInDayField, String.valueOf(lessonNeedToPassInDay));
     }
     public static void enterLessonType(String lessonType) throws Exception {
         Log4j.info("Entering Lesson Type");
         SelenideElement lessonTypeField = lessonsPage.getLessonType().shouldBe(visible);
-        OwnSendKeys.mySendKeys(lessonTypeField,lessonType);
+        MySendKeys.mySendKeys(lessonTypeField,lessonType);
     }
 
     public static void enterLessonDescription(String lessonDescription) throws Exception {
         Log4j.info("Entering Lesson Description");
         SelenideElement lessonDescriptionField = lessonsPage.getDescription().shouldBe(visible);
-        OwnSendKeys.mySendKeys(lessonDescriptionField, lessonDescription);
+        MySendKeys.mySendKeys(lessonDescriptionField, lessonDescription);
     }
     public static void enterLessonRequirement(String lessonRequirement) throws Exception {
         Log4j.info("Entering Lesson Requirement");
         SelenideElement lessonRequirementField = lessonsPage.getRequirements().shouldBe(visible);
-        OwnSendKeys.mySendKeys(lessonRequirementField, lessonRequirement);
+        MySendKeys.mySendKeys(lessonRequirementField, lessonRequirement);
     }
     public static void clickAddNewSpecific() throws Exception {
         Log4j.info("Click on Add New Specific button");
         SelenideElement addNewSpecificButton = lessonsPage.getAddNewSpecificsButton().shouldBe(visible);
-        OwnClick.baseClick(addNewSpecificButton);
+        MyClick.myClick(addNewSpecificButton);
     }
     public static void checkAddedSpecific(String lessonSpecificName){
         Log4j.info("Checking specific name");
@@ -114,13 +114,14 @@ public class LessonsTest {
     public static void enterSpecificName(String lessonSpecificName) throws Exception {
         Log4j.info("Entering Lesson Title");
         SelenideElement lessonSpecificField = lessonsPage.getFirstSpecificField();
-        OwnClick.baseClick(lessonSpecificField);
-        OwnSendKeys.mySendKeys(lessonSpecificField,lessonSpecificName);
+        MyClick.myClick(lessonSpecificField);
+        MySendKeys.mySendKeys(lessonSpecificField,lessonSpecificName);
     }
     public static void clickFinish() throws Exception {
         Log4j.info("Click on Add New Specific button");
         SelenideElement finishEditingButton = lessonsPage.getFinishEditingButton().shouldBe(visible);
-        OwnClick.baseClick(finishEditingButton);
+        CustomFluentWait.fluentWait(finishEditingButton,appear,6,500);
+        MyClick.myClick(finishEditingButton);
     }
     public static void checkSuccess(String successTitle){
         Log4j.info("Checking success title");
@@ -131,7 +132,8 @@ public class LessonsTest {
     public static void clickSuccessOk() throws Exception {
         Log4j.info("Click on Success OK button");
         SelenideElement successOkButton = lessonsPage.getSuccessOkButton().shouldBe(visible);
-        OwnClick.baseClick(successOkButton);
+        CustomFluentWait.fluentWait(successOkButton,visible,6,500);
+        MyClick.myClick(successOkButton);
     }
 
 }
