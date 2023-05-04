@@ -11,8 +11,8 @@ public class SpecificModalSteps {
         SpecificModalTest.checkSpecificModalTitle(specificModalTitle);
     }
 
-    @And("admin enter Key as {string}")
-    public void adminEnterKeyAs(String specificKey) throws Exception {
+    @And("admin enters Key as {string}")
+    public void adminEntersKeyAs(String specificKey) throws Exception {
         SpecificModalTest.enterKeyName(specificKey);
     }
 
@@ -27,13 +27,13 @@ public class SpecificModalSteps {
 
     }
 
-    @And("admin click on Where is coming from the [KEY] of the [PRODUCT]? question")
-    public void adminClickOnWhereIsComingFromTheKEYOfThePRODUCTQuestion() throws Exception {
+    @And("admin clicks on Where is coming from the [KEY] of the [PRODUCT]? question")
+    public void adminClicksOnWhereIsComingFromTheKEYOfThePRODUCTQuestion() throws Exception {
         SpecificModalTest.clickOnWhereIsComingFromTheKEYOfThePRODUCTQuestion();
     }
 
-    @And("admin click on OK")
-    public void adminClickOnOK() throws Exception {
+    @And("admin clicks on OK")
+    public void adminClicksOnOK() throws Exception {
         SpecificModalTest.clickOkButton();
     }
 

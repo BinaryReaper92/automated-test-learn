@@ -18,8 +18,8 @@ public class LessonsSteps {
         LessonsTest.checkTabTitle(tab);
     }
 
-    @And("admin enter title as {string}")
-    public void adminEnterTitleAs(String lessonTitle) throws Exception {
+    @And("admin enters title as {string}")
+    public void adminEntersTitleAs(String lessonTitle) throws Exception {
         LessonsTest.enterLessonTitle(lessonTitle);
 
     }
@@ -49,8 +49,8 @@ public class LessonsSteps {
         LessonsTest.changeSwitchButton(labelText);
     }
 
-    @And("admin enter price as {int}")
-    public void adminEnterPriceAs(int lessonPrice) throws Exception {
+    @And("admin enters price as {int}")
+    public void adminEntersPriceAs(int lessonPrice) throws Exception {
         LessonsTest.enterPriceValue(lessonPrice);
     }
 
@@ -59,28 +59,28 @@ public class LessonsSteps {
         LessonsTest.enterAcceptanceRateValue(lessonAcceptanceRate);
     }
 
-    @And("admin enter Need to pass in day as {int}")
-    public void adminEnterNeedToPassInDayAs(int lessonNeedToPassInDay) throws Exception {
+    @And("admin enters Need to pass in day as {int}")
+    public void adminEntersNeedToPassInDayAs(int lessonNeedToPassInDay) throws Exception {
         LessonsTest.enterNeedToPassInDayValue(lessonNeedToPassInDay);
     }
 
-    @And("admin enter Lesson Type as {string}")
-    public void adminEnterLessonTypeAs(String lessonType) throws Exception {
+    @And("admin enters Lesson Type as {string}")
+    public void adminEntersLessonTypeAs(String lessonType) throws Exception {
         LessonsTest.enterLessonType(lessonType);
     }
 
-    @And("admin enter Description as {string}")
-    public void adminEnterDescriptionAs(String lessonDescription) throws Exception {
+    @And("admin enters Description as {string}")
+    public void adminEntersDescriptionAs(String lessonDescription) throws Exception {
         LessonsTest.enterLessonDescription(lessonDescription);
     }
 
-    @And("admin enter Requirements as {string}")
-    public void adminEnterRequirementsAs(String lessonRequirements) throws Exception {
+    @And("admin enters Requirements as {string}")
+    public void adminEntersRequirementsAs(String lessonRequirements) throws Exception {
         LessonsTest.enterLessonRequirement(lessonRequirements);
     }
 
-    @And("admin click on add new Specific button")
-    public void adminClickOnAddNewSpecificButton() throws Exception {
+    @And("admin clicks on add new Specific button")
+    public void adminClicksOnAddNewSpecificButton() throws Exception {
         LessonsTest.clickAddNewSpecific();
     }
 
@@ -89,13 +89,13 @@ public class LessonsSteps {
         LessonsTest.checkAddedSpecific(lessonSpecificName);
     }
 
-    @And("admin enter Specific name as {string}")
-    public void adminEnterSpecificNameAs(String lessonSpecificName) throws Exception {
+    @And("admin enters Specific name as {string}")
+    public void adminEntersSpecificNameAs(String lessonSpecificName) throws Exception {
         LessonsTest.enterSpecificName(lessonSpecificName);
     }
 
-    @And("admin click on Finish editing button")
-    public void adminClickOnFinishEditingButton() throws Exception {
+    @And("admin clicks on Finish editing button")
+    public void adminClicksOnFinishEditingButton() throws Exception {
         LessonsTest.clickFinish();
     }
 
@@ -104,8 +104,8 @@ public class LessonsSteps {
         LessonsTest.checkSuccess(successTitle);
     }
 
-    @And("admin click on Success OK")
-    public void adminClickOnSuccessOK() throws Exception {
+    @And("admin clicks on Success OK")
+    public void adminClicksOnSuccessOK() throws Exception {
         LessonsTest.clickSuccessOk();
     }
 }
