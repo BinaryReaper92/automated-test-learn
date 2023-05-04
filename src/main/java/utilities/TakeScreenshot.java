@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import org.apache.commons.io.FileUtils;
 
 public class TakeScreenshot {
 
@@ -17,10 +18,10 @@ public class TakeScreenshot {
             WebDriver driver = WebDriverRunner.getWebDriver();
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             String screenshotPath = "./Screenshots/" + screenshotName;
-            org.apache.commons.io.FileUtils.copyFile(screenshot, new File(screenshotPath));
+            FileUtils.copyFile(screenshot, new File(screenshotPath));
             return screenshotPath;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             return null;
         }
     }
@@ -46,7 +47,7 @@ public class TakeScreenshot {
             System.out.println("Screenshot taken: " + screenshotPath);
             return screenshotPath;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());;
             return null;
         }
     }

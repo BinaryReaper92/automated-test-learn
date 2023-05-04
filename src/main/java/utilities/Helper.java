@@ -101,7 +101,7 @@ public class Helper {
     public static void windowsHelper() throws AWTException, InterruptedException {
         Robot robot = new Robot();
         // Press Ctrl + V to paste the file path
-        Thread.sleep(500);
+        Thread.sleep(1000);
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_V);

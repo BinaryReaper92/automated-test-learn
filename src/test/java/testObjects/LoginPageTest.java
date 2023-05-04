@@ -4,10 +4,10 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.testng.Assert;
 import pageObjects.LoginPage;
-import utilities.ConfigLoader;
+import utilities.ConfigReader;
 import utilities.Log4j;
-import utilities.OwnClick;
-import utilities.OwnSendKeys;
+import utilities.MyClick;
+import utilities.MySendKeys;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
@@ -19,7 +19,7 @@ public class LoginPageTest{
     private static String initialButtonColor;
 
     public static void openWebsite(String url){
-        String website = ConfigLoader.getAppUrl() + url;
+        String website = ConfigReader.getAppUrl() + url;
         Log4j.info("Opening the website:" + website);
         Selenide.open(website);
     }
@@ -27,29 +27,29 @@ public class LoginPageTest{
     public static void setUserName(String username) throws Exception {
 
         SelenideElement emailInput = loginPage.getEmailInput().shouldBe(visible);
-        OwnSendKeys.mySendKeys(emailInput, username);
+        MySendKeys.mySendKeys(emailInput, username);
     }
 
     public static void setPassword(String password) throws Exception {
 
         SelenideElement passwordInput = loginPage.getPasswordInput().shouldBe(visible);
-        OwnSendKeys.mySendKeys(passwordInput, password);
+        MySendKeys.mySendKeys(passwordInput, password);
     }
 
     public static void clickLogin() throws Exception {
 
         SelenideElement loginButton = loginPage.getLoginButton().shouldBe(visible);
-        OwnClick.baseClick(loginButton);
+        MyClick.myClick(loginButton);
     }
     public static void clickEmailField() throws Exception {
 
         SelenideElement emailField = loginPage.getEmailInput().shouldBe(visible);
-        OwnClick.baseClick(emailField);
+        MyClick.myClick(emailField);
     }
     public static void clickPasswordField() throws Exception {
 
         SelenideElement passwordField = loginPage.getPasswordInput().shouldBe(visible);
-        OwnClick.baseClick(passwordField);
+        MyClick.myClick(passwordField);
     }
     public static SelenideElement emptyEmail() {
 
@@ -74,12 +74,12 @@ public class LoginPageTest{
     public static void clickEyeButton() throws Exception {
 
         SelenideElement eyeButton = loginPage.getEyeButton().shouldBe(visible);
-        OwnClick.baseClick(eyeButton);
+        MyClick.myClick(eyeButton);
     }
     public static void clickForgotPasswordButton() throws Exception {
 
         SelenideElement forgotPassWordButton = loginPage.getForgotPasswordButton().shouldBe(visible);
-        OwnClick.baseClick(forgotPassWordButton);
+        MyClick.myClick(forgotPassWordButton);
     }
     public static void hoversOnLoginButton() {
         SelenideElement loginButton = loginPage.getLoginButton().shouldBe(visible);

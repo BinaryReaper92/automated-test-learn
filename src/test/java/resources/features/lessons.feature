@@ -4,11 +4,11 @@ Feature: Lessons
     Given the admin is logged in
     And the admin is on lessons page with title "Lessons"
 
-  @RegressionTest @SmokeTest
+  @RegressionTest
   Scenario: Create a new lesson
     When admin clicks on the Add Lesson button
     Then the add new lesson form is opened with the "Base data" tab active
-    And admin enter title as "Automated Test Lesson 1"
+    And admin enter title as "Automated Test Lesson 2"
     And admin choose Company as "! The new test"
     And admin choose Subsidiary as "! new sub test"
     And admin choose image
@@ -32,4 +32,3 @@ Feature: Lessons
     And admin click on Finish editing button
     Then Success modal should be displayed as "Success"
     And admin click on Success OK
-    And admin click on Finish editing button

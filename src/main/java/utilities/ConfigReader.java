@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ConfigLoader {
+public class ConfigReader {
     private static final Properties props = new Properties();
 
     static {
         try {
-            InputStream is = ConfigLoader.class.getResourceAsStream("/config.properties");
+            InputStream is = ConfigReader.class.getResourceAsStream("/config.properties");
             props.load(is);
         } catch (IOException e) {
             throw new RuntimeException("Could not load config file", e);
@@ -64,6 +64,9 @@ public class ConfigLoader {
     }
     public static String getNonExistPassword(){
         return props.getProperty("nonExist.password");
+    }
+    public static String getTestPicture(){
+        return props.getProperty("picturePath");
     }
 
 

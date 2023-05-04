@@ -18,21 +18,21 @@ public class BackgroundTest {
     private static final LessonsPage lessonsPage = page(LessonsPage.class);
 
     public static void login() throws Exception {
-        String website = ConfigLoader.getAppUrl();
+        String website = ConfigReader.getAppUrl();
         Selenide.open(website);
         SelenideElement emailInput = loginPage.getEmailInput().shouldBe(visible);
-        OwnSendKeys.mySendKeys(emailInput, ConfigLoader.getUsername());
+        MySendKeys.mySendKeys(emailInput, ConfigReader.getUsername());
         SelenideElement passwordInput = loginPage.getPasswordInput().shouldBe(visible);
-        OwnSendKeys.mySendKeys(passwordInput, ConfigLoader.getPassword());
+        MySendKeys.mySendKeys(passwordInput, ConfigReader.getPassword());
         SelenideElement loginButton = loginPage.getLoginButton().shouldBe(visible);
-        OwnClick.baseClick(loginButton);
+        MyClick.myClick(loginButton);
         SelenideElement element = dashboardPage.getDashboardPageTitle();
         CustomFluentWait.fluentWait(element, Condition.visible, 20, 500);
     }
 
     public static void clickOnLessonsMenuItem() throws Exception {
         SelenideElement lessonsMenuItem = lessonsPage.getLessonsMenuItem().shouldBe(visible);
-        OwnClick.baseClick(lessonsMenuItem);
+        MyClick.myClick(lessonsMenuItem);
     }
     public static void checkLessonsPageTitle(String title) {
         Log4j.info("Checking page title");

@@ -1,45 +1,36 @@
 package stepDefinitions;
 
-import com.codeborne.selenide.Selenide;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import testObjects.LoginPageTest;
-import utilities.ConfigLoader;
+import utilities.ConfigReader;
 import utilities.Helper;
 import utilities.Log4j;
 
 
 public class LoginPageSteps {
 
-
     @Given("Admin opens URL {string}")
-    public void admin_opens_url(String url) {
+    public void adminOpensURL(String url) {
         LoginPageTest.openWebsite(url);
     }
 
-
     @And("Admin enters existing valid Email")
-    public void admin_enters_email_as() throws Exception {
+    public void adminEntersExistingValidEmail() throws Exception {
         Log4j.info("Enter email");
-        LoginPageTest.setUserName(ConfigLoader.getUsername());
+        LoginPageTest.setUserName(ConfigReader.getUsername());
 
     }
-
-
     @And("Admin enters existing valid Password")
-    public void admin_enters_password_as() throws Exception {
+    public void adminEntersExistingValidPassword() throws Exception {
         Log4j.info("Enter password");
-        LoginPageTest.setPassword(ConfigLoader.getPassword());
-
+        LoginPageTest.setPassword(ConfigReader.getPassword());
     }
-
-
     @And("Admin click on Login")
-    public void admin_click_on_login() throws Exception {
+    public void adminClickOnLogin() throws Exception {
         Log4j.info("Click on login button");
         LoginPageTest.clickLogin();
-
     }
 
     @And("Admin leaves Email as blank")
@@ -87,14 +78,14 @@ public class LoginPageSteps {
     @And("Admin enters wrong Email")
     public void adminEntersWrongEmailAs() throws Exception {
         Log4j.info("Enter wrong email");
-        LoginPageTest.setUserName(ConfigLoader.getWrongUser());
+        LoginPageTest.setUserName(ConfigReader.getWrongUser());
         
     }
 
     @And("Admin enters wrong Password")
     public void adminEntersWrongPasswordAs() throws Exception {
         Log4j.info("Enter wrong password");
-        LoginPageTest.setPassword(ConfigLoader.getWrongPassword());
+        LoginPageTest.setPassword(ConfigReader.getWrongPassword());
         
     }
     @Then("Error message should display as {string}")
@@ -105,14 +96,14 @@ public class LoginPageSteps {
     @And("Admin enters non existing Email")
     public void adminEntersNonExistingEmailAs() throws Exception {
         Log4j.info("Enter non existing email");
-        LoginPageTest.setUserName(ConfigLoader.getNonExistUser());
+        LoginPageTest.setUserName(ConfigReader.getNonExistUser());
         
     }
 
     @And("Admin enters non existing Password")
     public void adminEntersNonExistingPasswordAs() throws Exception {
         Log4j.info("Enter non existing password");
-        LoginPageTest.setPassword(ConfigLoader.getNonExistPassword());
+        LoginPageTest.setPassword(ConfigReader.getNonExistPassword());
         
     }
 
@@ -151,4 +142,7 @@ public class LoginPageSteps {
         LoginPageTest.clickForgotPasswordButton();
         
     }
+
+
+
 }

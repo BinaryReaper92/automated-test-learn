@@ -11,9 +11,9 @@ public class DatabaseConnection implements AutoCloseable {
     }
 
     private void connectToDatabase() {
-        String url = ConfigLoader.getDBUrl();
-        String username = ConfigLoader.getDBUser();
-        String password = ConfigLoader.getDBPassword();
+        String url = ConfigReader.getDBUrl();
+        String username = ConfigReader.getDBUser();
+        String password = ConfigReader.getDBPassword();
 
         try {
             connection = DriverManager.getConnection(url, username, password);
