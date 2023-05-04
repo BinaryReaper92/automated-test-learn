@@ -27,8 +27,8 @@ public class LoginPageSteps {
         Log4j.info("Enter password");
         LoginPageTest.setPassword(ConfigReader.getPassword());
     }
-    @And("Admin click on Login")
-    public void adminClickOnLogin() throws Exception {
+    @And("Admin clicks on Login")
+    public void adminClicksOnLogin() throws Exception {
         Log4j.info("Click on login button");
         LoginPageTest.clickLogin();
     }
@@ -107,8 +107,8 @@ public class LoginPageSteps {
         
     }
 
-    @And("Admin Hoover on Login button")
-    public void adminHooverOnLoginButton() {
+    @And("Admin hoovers on Login button")
+    public void adminHooversOnLoginButton() {
         Log4j.info("Hover on login button");
         LoginPageTest.hoversOnLoginButton();
 
@@ -122,8 +122,8 @@ public class LoginPageSteps {
         
     }
 
-    @And("Admin click on Eye icon")
-    public void adminClickOnEyeIcon() throws Exception {
+    @And("Admin clicks on Eye icon")
+    public void adminClicksOnEyeIcon() throws Exception {
         Log4j.info("Click on Eye button");
         LoginPageTest.clickEyeButton();
         
@@ -136,8 +136,8 @@ public class LoginPageSteps {
         
     }
 
-    @And("Admin click on Forgot password")
-    public void adminClickOnForgotPassword() throws Exception {
+    @And("Admin clicks on Forgot password")
+    public void adminClicksOnForgotPassword() throws Exception {
         Log4j.info("Click on Forgot password button");
         LoginPageTest.clickForgotPasswordButton();
         
