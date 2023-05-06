@@ -34,12 +34,6 @@ public class TestSetup {
     public void tearDown(Scenario scenario)  {
 
         if (scenario.isFailed()) {
-
-            String testName = scenario.getName();
-            String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
-            String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
-            Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
-
             String bugCreation = ConfigReader.getJiraCreate();
             if (bugCreation.equalsIgnoreCase("yes")) {
                 createBug(screenshotPath);
@@ -53,8 +47,13 @@ public class TestSetup {
         closeWebDriver();
     }
 
-    private void createBug(Scenario scenario, String screenshotPath)
+    private void createBug(Scenario scenario)
     {
+        String testName = scenario.getName();
+        String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
+        String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
+        Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
+
         String issueSummary = "Automation Test Failed - "+scenario.getName();
         String issueDescription = CucumberEventListener.EventMessages;
         System.out.println(issueDescription);
