@@ -60,15 +60,22 @@ public class TestSetup {
 
         try {
             JiraUtils jiraUtils = new JiraUtils(issueSummary, issueDescription);
-            jiraUtils.addAttachmentToJiraIssue(screenshotPath);
+            tryAddAttachmentToJiraIssue(screenshotPath);
 
             String htmlReportPath = "./test-output/emailable-report.html";
-            jiraUtils.addAttachmentToJiraIssue(htmlReportPath);
+            tryAddAttachmentToJiraIssue(htmlReportPath);
 
             String logPath = "./" + Log4j.logFileName;
-            jiraUtils.addAttachmentToJiraIssue(logPath);
-        } catch (Exception e1){
-            e1.printStackTrace();
+            tryAddAttachmentToJiraIssue(logPath);
+
+    }
+
+    private void tryAddAttachmentToJiraIssue(String path){
+        try{
+            jiraUtils.addAttachmentToJiraIssue(path);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
