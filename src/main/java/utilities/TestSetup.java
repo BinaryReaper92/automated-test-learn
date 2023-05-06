@@ -38,40 +38,11 @@ public class TestSetup {
             String testName = scenario.getName();
             String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
             String screenshotPath = TakeScreenshot.takeScreenshot(screenshotName);
-            TakeScreenshot.takeScreenshot(screenshotName);
             Log4j.info("Test failed with the following test: " + testName + " \n Screenshot taken to: "+ screenshotPath);
 
             String bugCreation = ConfigReader.getJiraCreate();
-            if (bugCreation.equalsIgnoreCase("yes")){
-                String issueSummary = "Automation Test Failed - "+scenario.getName();
-                String issueDescription = CucumberEventListener.EventMessages;
-                System.out.println(issueDescription);
-
-                try {
-                    JiraUtils jiraUtils = new JiraUtils(issueSummary, issueDescription);
-
-                    try {
-                        jiraUtils.addAttachmentToJiraIssue(screenshotPath);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    try {
-                        String htmlReportPath = "./test-output/emailable-report.html";
-                        jiraUtils.addAttachmentToJiraIssue(htmlReportPath);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    try {
-
-                        String logPath = "./" + Log4j.logFileName;
-                        jiraUtils.addAttachmentToJiraIssue(logPath);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e1){
-                    e1.printStackTrace();
-                }
-
+            if (bugCreation.equalsIgnoreCase("yes")) {
+                createBug(screenshotPath);
             }
         }
 
@@ -80,6 +51,26 @@ public class TestSetup {
 
         Log4j.endLog("Test is ending.");
         closeWebDriver();
+    }
+
+    private void createBug(Scenario scenario, String screenshotPath)
+    {
+        String issueSummary = "Automation Test Failed - "+scenario.getName();
+        String issueDescription = CucumberEventListener.EventMessages;
+        System.out.println(issueDescription);
+
+        try {
+            JiraUtils jiraUtils = new JiraUtils(issueSummary, issueDescription);
+            jiraUtils.addAttachmentToJiraIssue(screenshotPath);
+
+            String htmlReportPath = "./test-output/emailable-report.html";
+            jiraUtils.addAttachmentToJiraIssue(htmlReportPath);
+
+            String logPath = "./" + Log4j.logFileName;
+            jiraUtils.addAttachmentToJiraIssue(logPath);
+        } catch (Exception e1){
+            e1.printStackTrace();
+        }
     }
 
 }
