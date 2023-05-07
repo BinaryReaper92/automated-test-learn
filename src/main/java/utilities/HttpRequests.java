@@ -26,7 +26,7 @@ public class HttpRequests {
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             return null;
         }
     }
@@ -78,7 +78,7 @@ public class HttpRequests {
             response.setResponseList(JSONUtils.parseJsonArrayFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             return null;
         }
     }
@@ -90,7 +90,7 @@ public class HttpRequests {
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class HttpRequests {
             response.setResponseMap(JSONUtils.parseJsonFromString(response.getResponseString()));
             return response;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             return null;
         }
     }

@@ -18,7 +18,7 @@ public class DatabaseConnection implements AutoCloseable {
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
     }
 
@@ -33,7 +33,7 @@ public class DatabaseConnection implements AutoCloseable {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
     }
 }

@@ -3,6 +3,7 @@ package utilities;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.cucumber.java.Scenario;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,7 +24,7 @@ public class JiraUtils {
 
     public JiraUtils(String issueSummary, String issueDescription) throws IOException {
         this.issueSummary = issueSummary;
-        this.issueDescription = issueDescription.replaceAll("\\r?\\n", "\n");
+        this.issueDescription = issueDescription.replaceAll("\\r\\n", "\n");
 
         this.createJiraIssue();
     }
@@ -150,6 +151,29 @@ public class JiraUtils {
             System.out.println("Attachment uploaded");
         } else {
             System.out.println("Attachment not uploaded");
+        }
+    }
+    public static void createBugTicket(Scenario scenario, String screenshotPath) throws IOException {
+        String issueSummary = "Automation Test Failed - "+scenario.getName();
+        String issueDescription = CucumberEventListener.EventMessages;
+        System.out.println(issueDescription);
+
+        JiraUtils jiraUtils = new JiraUtils(issueSummary, issueDescription);
+        tryAddAttachmentToJiraIssue(jiraUtils, screenshotPath);
+
+        String htmlReportPath = "./test-output/emailable-report.html";
+        tryAddAttachmentToJiraIssue(jiraUtils, htmlReportPath);
+
+        String logPath = "./" + Log4j.logFileName;
+        tryAddAttachmentToJiraIssue(jiraUtils, logPath);
+    }
+
+    public static void tryAddAttachmentToJiraIssue(JiraUtils jiraUtils, String path){
+        try{
+            jiraUtils.addAttachmentToJiraIssue(path);
+        }
+        catch (Exception ex){
+            Log4j.error(ex.getMessage());
         }
     }
 }

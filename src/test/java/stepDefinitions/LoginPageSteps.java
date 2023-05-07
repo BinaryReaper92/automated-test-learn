@@ -19,13 +19,13 @@ public class LoginPageSteps {
     @And("Admin enters existing valid Email")
     public void adminEntersExistingValidEmail() throws Exception {
         Log4j.info("Enter email");
-        LoginPageTest.setUserName(ConfigReader.getUsername());
+        LoginPageTest.setUserName(ConfigReader.getValidUsername());
 
     }
     @And("Admin enters existing valid Password")
     public void adminEntersExistingValidPassword() throws Exception {
         Log4j.info("Enter password");
-        LoginPageTest.setPassword(ConfigReader.getPassword());
+        LoginPageTest.setPassword(ConfigReader.getValidPassword());
     }
     @And("Admin clicks on Login")
     public void adminClicksOnLogin() throws Exception {

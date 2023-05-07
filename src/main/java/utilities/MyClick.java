@@ -17,7 +17,6 @@ public class MyClick {
             } else {
                 Log4j.error( element, "Unable to click on element" );
                 assert false;
-                return false;
             }
         } catch (StaleElementReferenceException e) {
             Log4j.error( element, "Element is not attached to the page document", e );
@@ -42,7 +41,6 @@ public class MyClick {
             } else {
                 Log4j.error( element, "Unable to click on element" );
                 assert false;
-                return false;
             }
         } catch (StaleElementReferenceException e) {
             Log4j.error( element, "Element is not attached to the page document", e );

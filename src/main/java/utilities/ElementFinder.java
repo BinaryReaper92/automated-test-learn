@@ -13,7 +13,7 @@ public class ElementFinder {
         try {
             return $(getWebDriver().findElement(By.id(locator)));
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -23,7 +23,7 @@ public class ElementFinder {
         try {
             return $(locator);
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -43,7 +43,7 @@ public class ElementFinder {
         try {
             return $(By.xpath(".//*[text()='" + locator + "']")).shouldBe(visible);
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -52,7 +52,7 @@ public class ElementFinder {
         try {
             return $(getWebDriver().findElement(By.xpath("//span[contains(text(), '" + locator + "')]")));
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -62,7 +62,7 @@ public class ElementFinder {
         try {
             return $(By.linkText(locator)).shouldBe(visible);
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;
@@ -71,7 +71,7 @@ public class ElementFinder {
         try {
             return $(By.className(locator));
         } catch (NoSuchElementException e) {
-            OwnTrace.trace("Unable to find element: '"+locator+"'");
+            Log4j.error("Unable to find element: '"+locator+"'");
             System.out.println("Unable to find element " + e.getMessage());
         }
         return null;

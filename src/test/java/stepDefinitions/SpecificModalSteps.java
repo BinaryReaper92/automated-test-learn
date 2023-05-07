@@ -16,13 +16,13 @@ public class SpecificModalSteps {
         SpecificModalTest.enterKeyName(specificKey);
     }
 
-    @And("admin select Type as {string}")
-    public void adminSelectTypeAs(String specificType) throws Exception {
+    @And("admin selects Type as {string}")
+    public void adminSelectsTypeAs(String specificType) throws Exception {
         SpecificModalTest.chooseSpecificType(specificType);
     }
 
-    @And("admin uncheck Add it in general block")
-    public void adminUncheckAddItInGeneralBlock() throws Exception {
+    @And("admin unchecks Add it in general block")
+    public void adminUnchecksAddItInGeneralBlock() throws Exception {
         SpecificModalTest.uncheckAddItInGeneralBlockCheckbox();
 
     }

@@ -24,28 +24,28 @@ public class LessonsSteps {
 
     }
 
-    @And("admin choose Company as {string}")
-    public void adminChooseCompanyAs(String lessonCompany) throws Exception {
+    @And("admin chooses Company as {string}")
+    public void adminChoosesCompanyAs(String lessonCompany) throws Exception {
         LessonsTest.chooseCompany(lessonCompany);
     }
 
-    @And("admin choose Subsidiary as {string}")
-    public void adminChooseSubsidiaryAs(String lessonSubsidiary) throws Exception {
+    @And("admin chooses Subsidiary as {string}")
+    public void adminChoosesSubsidiaryAs(String lessonSubsidiary) throws Exception {
         LessonsTest.chooseSubsidiary(lessonSubsidiary);
     }
 
-    @And("admin choose image")
-    public void adminChooseImage() throws Exception {
+    @And("admin chooses image")
+    public void adminChoosesImage() throws Exception {
         LessonsTest.choosePicture();
     }
 
-    @And("admin choose Tag as {string}")
-    public void adminChooseTagAs(String lessonTag) throws Exception {
+    @And("admin chooses Tag as {string}")
+    public void adminChoosesTagAs(String lessonTag) throws Exception {
         LessonsTest.chooseTag(lessonTag);
     }
 
-    @And("admin switch lesson to {string}")
-    public void adminSwitchLessonTo(String labelText) throws Exception {
+    @And("admin switches lesson to {string}")
+    public void adminSwitchesLessonTo(String labelText) throws Exception {
         LessonsTest.changeSwitchButton(labelText);
     }
 
@@ -54,8 +54,8 @@ public class LessonsSteps {
         LessonsTest.enterPriceValue(lessonPrice);
     }
 
-    @And("admin change Acceptance Rate to {int}")
-    public void adminChangeAcceptanceRateTo(int lessonAcceptanceRate) throws Exception {
+    @And("admin changes Acceptance Rate to {int}")
+    public void adminChangesAcceptanceRateTo(int lessonAcceptanceRate) throws Exception {
         LessonsTest.enterAcceptanceRateValue(lessonAcceptanceRate);
     }
 
