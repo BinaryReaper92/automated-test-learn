@@ -22,7 +22,7 @@ public class JSONUtils {
         try (FileWriter fileWriter = new FileWriter("./resources/bearerToken.txt")) {
             fileWriter.write(bearerToken);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
     }
     public static HashMap<String, Object> parseJsonFromString(String jsonString) {
@@ -36,17 +36,17 @@ public class JSONUtils {
 
             writer = new BufferedWriter(new FileWriter("./resources/requestsBodyJsons/getCompanies.json"));
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
         try {
             writer.write(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
         try {
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
 
     }
@@ -79,7 +79,7 @@ public class JSONUtils {
             }
         } catch (IOException e) {
             System.err.println("Error reading file: " + filePath);
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
         return jsonString.toString();
     }

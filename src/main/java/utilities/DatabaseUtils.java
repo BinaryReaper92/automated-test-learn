@@ -33,7 +33,7 @@ public class DatabaseUtils {
                 result.add(newTable);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
             throw e;
         }
         return result;
@@ -57,7 +57,7 @@ public class DatabaseUtils {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
         return -1;
     }
@@ -79,7 +79,7 @@ public class DatabaseUtils {
                 System.out.printf("No item found with ID: %d%n", id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
     }
 
@@ -98,7 +98,7 @@ public class DatabaseUtils {
                 System.out.printf("No item found with ID: %d%n", id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         }
     }
     public static ItemModel getItemById(String table, int id) {
@@ -120,13 +120,13 @@ public class DatabaseUtils {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4j.error(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Log4j.error(e.getMessage());
                 }
             }
         }

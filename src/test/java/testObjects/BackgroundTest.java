@@ -21,9 +21,9 @@ public class BackgroundTest {
         String website = ConfigReader.getAppUrl();
         Selenide.open(website);
         SelenideElement emailInput = loginPage.getEmailInput().shouldBe(visible);
-        MySendKeys.mySendKeys(emailInput, ConfigReader.getUsername());
+        MySendKeys.mySendKeys(emailInput, ConfigReader.getValidUsername());
         SelenideElement passwordInput = loginPage.getPasswordInput().shouldBe(visible);
-        MySendKeys.mySendKeys(passwordInput, ConfigReader.getPassword());
+        MySendKeys.mySendKeys(passwordInput, ConfigReader.getValidPassword());
         SelenideElement loginButton = loginPage.getLoginButton().shouldBe(visible);
         MyClick.myClick(loginButton);
         SelenideElement element = dashboardPage.getDashboardPageTitle();

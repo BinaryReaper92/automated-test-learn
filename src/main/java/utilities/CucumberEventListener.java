@@ -36,9 +36,10 @@ public class CucumberEventListener implements ConcurrentEventListener {
         if (testStep instanceof PickleStepTestStep) {
             PickleStepTestStep pickleStep = (PickleStepTestStep) testStep;
             String stepName = pickleStep.getStep().getText();
-            String msg = "["+event.getResult().getStatus()+"]: " + stepName + " finished!\n";
-            if(!event.getResult().getStatus().isOk()){
-                msg += event.getResult().getError().getMessage()+"\n\n";
+            Result result = event.getResult();
+            String msg = "["+result.getStatus()+"]: " + stepName + " finished!\n";
+            if(!result.getStatus().isOk()){
+                msg += result.getError().getMessage()+"\n\n";
                 Log4j.error(msg);
             }else {
                 Log4j.info(msg);

@@ -8,32 +8,30 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class EmailUtil {
-    private static Properties getEmailProperties() {
-        Properties properties = new Properties();
-        try (InputStream input = EmailUtil.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input != null) {
-                properties.load(input);
-            } else {
-                throw new IOException("Cannot find config.properties");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties;
+    private static boolean initialized;
+    public static Properties EmailProperties;
+    public static void init (){
+        if (initialized)
+            return;
+
+        EmailProperties = new Properties();
+        EmailProperties.setProperty("mail.smtp.host", ConfigReader.getMailSmtpHost());
+        EmailProperties.setProperty("mail.smtp.port", ConfigReader.getMailSmtpPort());
+        EmailProperties.setProperty("mail.smtp.auth", ConfigReader.getMailSmtpAuth());
+        EmailProperties.setProperty("mail.smtp.starttls.enable", ConfigReader.getMailSmtpStarttls());
+
+        initialized = true;
     }
 
     public static void sendEmailWithAttachment(String subject, String body, File attachment) throws MessagingException {
-        Properties properties = getEmailProperties();
-        String from = properties.getProperty("from.email");
-        String password = properties.getProperty("from.password");
-        String to = properties.getProperty("to.email");
+        String from = ConfigReader.getFromEmail();
+        String password = ConfigReader.getFromPassword();
+        String to = ConfigReader.getToEmail();
 
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(EmailProperties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, password);
             }
@@ -68,6 +66,7 @@ public class EmailUtil {
             sendEmailWithAttachment(subject, body, reportFile);
             System.out.println("Email sent successfully!");
         } catch (MessagingException e) {
+            Log4j.error(e.getMessage());
             System.err.println("Error sending email: " + e.getMessage());
         }
     }

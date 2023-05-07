@@ -32,9 +32,8 @@ public class LessonsTest {
         Log4j.info("Choosing Company from dropdown");
         SelenideElement lessonCompanyDropdown = lessonsPage.getCompanyDropdown().shouldBe(visible);
         MyClick.myClick(lessonCompanyDropdown);
-        SelenideElement optionToSelect = lessonsPage.getCompanyTest();
+        SelenideElement optionToSelect = lessonsPage.getCompanyTest().shouldBe(visible);
         MyClick.myClick(optionToSelect);
-
     }
     public static void chooseSubsidiary(String lessonSubsidiary) throws Exception {
         Log4j.info("Choosing Subsidiary from dropdown");
