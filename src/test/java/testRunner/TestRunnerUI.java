@@ -1,8 +1,11 @@
 package testRunner;
 
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.Test;
 
 public class TestRunnerUI {
+
 
     @CucumberOptions
             (
@@ -10,9 +13,11 @@ public class TestRunnerUI {
                     glue = {"stepDefinitions","utilities"},
                     tags = "@SmokeTest",
                     dryRun = false,
-                    plugin = {"pretty","html:Reports/Report.html","json:Reports/Report.json","junit:Reports/Report.xml"}
+                    plugin = {"pretty", "html:Reports/Report.html","json:Reports/Report.json","junit:Reports/Report.xml","utilities.CucumberEventListener"}
 
             )
-    public class TestRun {
+    @Test
+    public class TestRunner extends AbstractTestNGCucumberTests {
+
     }
 }

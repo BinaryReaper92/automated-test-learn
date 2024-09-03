@@ -1,0 +1,108 @@
+{
+  "id": 2317,
+  "title": "Automation test",
+  "public": false,
+  "lessonType": "test",
+  "auditor": null,
+  "author": {
+    "id": 719,
+    "firstName": "admin111",
+    "lastName": "admin111",
+    "email": "balint.gyozo+daa@attrecto.com"
+  },
+  "expirationDays": 0,
+  "price": 0,
+  "acceptanceRate": 30,
+  "images": [
+    {
+      "id": 1631,
+      "data": "https://boutiq-bar.s3.eu-central-1.amazonaws.com/development/Lesson/1631/conversions/60ee13d0-dcaf-11ed-bd74-e1815d5b6df3-thumb.jpg"
+    }
+  ],
+  "imagesFull": [
+    "https://boutiq-bar.s3.eu-central-1.amazonaws.com/development/Lesson/1631/60ee13d0-dcaf-11ed-bd74-e1815d5b6df3.jpeg"
+  ],
+  "tags": [
+    {
+      "id": 74,
+      "title": "TEST"
+    }
+  ],
+  "specifics": [
+    {
+      "id": 28499,
+      "key": "test",
+      "value": "test",
+      "type": 0,
+      "level": 0,
+      "isShow": true,
+      "isGeneral": true,
+      "isGenerate": true,
+      "question": "Where is coming from the [KEY] of the [PRODUCT]?",
+      "isSearchable": true
+    }
+  ],
+  "canBePrivate": true,
+  "canAccess": true,
+  "users": [],
+  "groups": [],
+  "subsidiary": {
+    "id": 160,
+    "legalName": "New sub test",
+    "name": "! new sub test",
+    "vatIdentificationNumber": "12345",
+    "email": "aa@bb.cc",
+    "phoneNumber": "+36301234567",
+    "active": true,
+    "address": {
+      "id": 1232,
+      "zip": "9023",
+      "country": "Hungary",
+      "city": "Győr",
+      "street": "Random",
+      "houseNumber": "1",
+      "publicPlace": "Street"
+    },
+    "subsidiaryType": {
+      "id": 13,
+      "name": "lounge",
+      "maingroupType": {
+        "id": 1,
+        "name": "bar"
+      }
+    },
+    "opening": {
+      "id": 1,
+      "name": "Continuous"
+    },
+    "priceRange": {
+      "id": 1,
+      "name": "$",
+      "range": "0-5 eur"
+    },
+    "contacts": [],
+    "logo": "https://boutiq-bar.s3.eu-central-1.amazonaws.com/development/Subsidiary/1536/conversions/3c69ca10-75a0-11ed-8562-43f0be824e14-thumb.jpg",
+    "logoFull": "https://boutiq-bar.s3.eu-central-1.amazonaws.com/development/Subsidiary/1536/3c69ca10-75a0-11ed-8562-43f0be824e14.png",
+    "membersCount": 11,
+    "latestSubscription": {
+      "id": 104,
+      "subsidiary_id": 160,
+      "subscription_id": null,
+      "state": 0,
+      "deadline": null,
+      "created_at": "2022-12-06T19:57:38.000000Z",
+      "updated_at": "2022-12-06T19:57:38.000000Z",
+      "lessonCount": 0,
+      "adminState": 0,
+      "subscription": null
+    },
+    "companies": {
+      "id": 145,
+      "name": "! The new test"
+    },
+    "isDisabled": false
+  },
+  "courses": [],
+  "whatDoYouLearn": "desc1",
+  "requirement": "req2"
+}
